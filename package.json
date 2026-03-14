@@ -1,10 +1,10 @@
 {
-  "name": "express",
+  "name": "kuwait-store",
   "version": "1.0.0",
-  "description": "",
+  "description": "Kuwait Store - Online Shopping",
   "type": "module",
-  "keywords": [],
-  "author": "",
+  "keywords": ["kuwait", "store", "ecommerce"],
+  "author": "khaledq84ever",
   "license": "ISC",
   "dependencies": {
     "@types/express": "^5.0.0",

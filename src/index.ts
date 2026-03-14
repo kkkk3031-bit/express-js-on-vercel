@@ -136,6 +136,7 @@ const page = (title: string, breadcrumb: string, body: string, meta = '') => `<!
   <meta property="og:description" content="${meta || 'Shop premium products at Kuwait Store'}"/>
   <title>${title} | Kuwait Store</title>
   <link rel="stylesheet" href="/style.css"/>
+  <link rel="icon" href="/logo.png"/>
 </head>
 <body>
   ${topbarHTML}

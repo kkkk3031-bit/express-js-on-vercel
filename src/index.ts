@@ -16,7 +16,7 @@ const ADMIN_TOKEN = crypto.createHash('sha256').update(ADMIN_PASS + 'ks').digest
 
 // ── TYPES ──
 type Product = {
-  id: number; name: string; nameAr: string; price: number; emoji: string
+  id: number; name: string; nameAr: string; price: number; emoji: string; img: string
   category: string; categoryAr: string; badge: string; desc: string; descAr: string
   specs: Record<string, string>
 }
@@ -28,18 +28,18 @@ type Order = {
 
 // ── PRODUCTS ──
 let PRODUCTS: Product[] = [
-  { id: 1,  name: 'iPhone 15 Pro Max',      nameAr: 'آيفون 15 برو ماكس',    price: 319.0, emoji: '📱', category: 'Phones',   categoryAr: 'هواتف',     badge: 'hot',  desc: 'Apple A17 Pro chip, 48MP camera, titanium design, USB-C, ProMotion 120Hz display.',      descAr: 'شريحة Apple A17 Pro، كاميرا 48MP، تصميم تيتانيوم، USB-C، شاشة 120Hz.',   specs: { Chip: 'A17 Pro', Camera: '48MP Triple', Display: '6.7" OLED 120Hz', Storage: '256GB' } },
-  { id: 2,  name: 'Samsung Galaxy S24 Ultra',nameAr: 'سامسونج جالاكسي S24 ألترا', price: 289.0, emoji: '📲', category: 'Phones',   categoryAr: 'هواتف',     badge: 'new',  desc: 'Snapdragon 8 Gen 3, 200MP camera, built-in S Pen, 12GB RAM, 6.8" Dynamic AMOLED.',    descAr: 'معالج Snapdragon 8 Gen 3، كاميرا 200MP، قلم S Pen، ذاكرة 12GB.',         specs: { Processor: 'Snapdragon 8 Gen 3', Camera: '200MP Quad', RAM: '12GB', Display: '6.8" AMOLED' } },
-  { id: 3,  name: 'PlayStation 5',          nameAr: 'بلايستيشن 5',           price: 149.0, emoji: '🎮', category: 'Gaming',   categoryAr: 'ألعاب',     badge: 'hot',  desc: 'Next-gen gaming console, 4K@120fps, ray tracing, 825GB SSD, DualSense controller.',     descAr: 'جهاز ألعاب الجيل الجديد، 4K بـ120fps، تتبع أشعة، SSD 825GB.',             specs: { GPU: '10.28 TFLOPS', Resolution: '4K 120fps', Storage: '825GB SSD', Audio: '3D Tempest' } },
-  { id: 4,  name: 'Xbox Series X',          nameAr: 'إكس بوكس سيريس إكس',   price: 129.0, emoji: '🕹️', category: 'Gaming',   categoryAr: 'ألعاب',     badge: 'sale', desc: 'Most powerful Xbox ever, 12 TFLOPS GPU, 4K@120fps, 1TB SSD, Quick Resume.',            descAr: 'أقوى Xbox على الإطلاق، GPU بـ12 TFLOPS، 4K بـ120fps، SSD 1TB.',           specs: { GPU: '12 TFLOPS', Resolution: '4K 120fps', Storage: '1TB SSD', RAM: '16GB GDDR6' } },
-  { id: 5,  name: 'Samsung 65" QLED 4K TV', nameAr: 'تلفزيون سامسونج 65 QLED 4K', price: 399.0, emoji: '📺', category: 'TVs',  categoryAr: 'تلفزيونات', badge: 'hot',  desc: 'Quantum HDR, 120Hz, Smart TV with Tizen OS, Dolby Atmos, built-in Alexa & Bixby.',     descAr: 'Quantum HDR، 120Hz، تلفاز ذكي بنظام Tizen، Dolby Atmos، Alexa.',        specs: { Panel: 'QLED', Resolution: '4K UHD', Refresh: '120Hz', HDR: 'Quantum HDR 2000' } },
-  { id: 6,  name: 'LG C3 OLED 55"',        nameAr: 'إل جي OLED C3 55 بوصة', price: 349.0, emoji: '🖥️', category: 'TVs',    categoryAr: 'تلفزيونات', badge: 'new',  desc: 'Perfect blacks, OLED evo panel, 4K 120Hz, G-Sync, FreeSync, webOS 23, Dolby Vision.',  descAr: 'لوح OLED evo، 4K بـ120Hz، G-Sync، webOS 23، Dolby Vision IQ.',           specs: { Panel: 'OLED evo', Resolution: '4K', Refresh: '120Hz', Gaming: 'G-Sync + FreeSync' } },
-  { id: 7,  name: 'MacBook Pro M3',         nameAr: 'ماك بوك برو M3',        price: 489.0, emoji: '💻', category: 'Laptops', categoryAr: 'لابتوب',    badge: 'new',  desc: 'Apple M3 chip, 18-hour battery, Liquid Retina XDR display, 16GB RAM, 512GB SSD.',     descAr: 'شريحة Apple M3، بطارية 18 ساعة، شاشة Liquid Retina XDR، 16GB RAM.',      specs: { Chip: 'Apple M3', RAM: '16GB', Storage: '512GB SSD', Battery: '18 hours' } },
-  { id: 8,  name: 'AirPods Pro 2',         nameAr: 'إيربودز برو 2',          price: 79.0,  emoji: '🎧', category: 'Audio',   categoryAr: 'صوتيات',    badge: 'hot',  desc: 'Active noise cancellation, Adaptive Audio, H2 chip, 30hr battery, USB-C case.',        descAr: 'إلغاء ضجيج نشط، صوت تكيفي، شريحة H2، بطارية 30 ساعة.',                  specs: { Chip: 'Apple H2', ANC: 'Adaptive ANC', Battery: '30hr total', Case: 'USB-C MagSafe' } },
-  { id: 9,  name: 'iPad Pro 12.9"',        nameAr: 'آيباد برو 12.9 بوصة',   price: 349.0, emoji: '📟', category: 'Tablets', categoryAr: 'أجهزة لوحية',badge: 'new',  desc: 'M2 chip, Liquid Retina XDR, 12MP camera, 5G, Apple Pencil 2 support, 256GB.',         descAr: 'شريحة M2، شاشة Liquid Retina XDR، كاميرا 12MP، 5G، دعم Apple Pencil 2.', specs: { Chip: 'Apple M2', Display: '12.9" XDR', Storage: '256GB', Connectivity: '5G + WiFi 6E' } },
-  { id: 10, name: 'RTX 4080 Super GPU',    nameAr: 'كارت شاشة RTX 4080 سوبر', price: 249.0, emoji: '⚡', category: 'Gaming', categoryAr: 'ألعاب',     badge: 'sale', desc: 'NVIDIA Ada Lovelace, 16GB GDDR6X, DLSS 3, ray tracing, 4K gaming powerhouse.',         descAr: 'بنية NVIDIA Ada Lovelace، 16GB GDDR6X، DLSS 3، تتبع أشعة، ألعاب 4K.',    specs: { VRAM: '16GB GDDR6X', Architecture: 'Ada Lovelace', TDP: '320W', Ports: '3x DP + HDMI' } },
-  { id: 11, name: 'Sony WH-1000XM5',       nameAr: 'سوني WH-1000XM5',       price: 89.0,  emoji: '🎵', category: 'Audio',   categoryAr: 'صوتيات',    badge: 'sale', desc: 'Industry-leading ANC, 30hr battery, Multipoint, LDAC hi-res audio, speak-to-chat.',   descAr: 'إلغاء ضجيج رائد في الصناعة، بطارية 30 ساعة، صوت LDAC عالي الدقة.',       specs: { ANC: 'Industry-leading', Battery: '30 hours', Driver: '30mm', Codec: 'LDAC Hi-Res' } },
-  { id: 12, name: 'Apple Watch Ultra 2',   nameAr: 'ساعة آبل ألترا 2',      price: 129.0, emoji: '⌚', category: 'Wearables',categoryAr: 'إكسسوارات', badge: 'new',  desc: 'S9 chip, titanium case, 60hr battery, dual-frequency GPS, 100m water resistance.',     descAr: 'شريحة S9، علبة تيتانيوم، بطارية 60 ساعة، GPS ثنائي التردد، مقاومة ماء 100م.',specs: { Chip: 'Apple S9', Case: 'Titanium', Battery: '60 hours', Water: '100m WR' } },
+  { id: 1,  name: 'iPhone 15 Pro Max',       nameAr: 'آيفون 15 برو ماكس',         price: 319.0, emoji: '📱', img: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&q=80&auto=format&fit=crop', category: 'Phones',    categoryAr: 'هواتف',      badge: 'hot',  desc: 'Apple A17 Pro chip, 48MP camera, titanium design, USB-C, ProMotion 120Hz display.',      descAr: 'شريحة Apple A17 Pro، كاميرا 48MP، تصميم تيتانيوم، USB-C، شاشة 120Hz.',   specs: { Chip: 'A17 Pro', Camera: '48MP Triple', Display: '6.7" OLED 120Hz', Storage: '256GB' } },
+  { id: 2,  name: 'Samsung Galaxy S24 Ultra', nameAr: 'سامسونج جالاكسي S24 ألترا',  price: 289.0, emoji: '📲', img: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&q=80&auto=format&fit=crop', category: 'Phones',    categoryAr: 'هواتف',      badge: 'new',  desc: 'Snapdragon 8 Gen 3, 200MP camera, built-in S Pen, 12GB RAM, 6.8" Dynamic AMOLED.',    descAr: 'معالج Snapdragon 8 Gen 3، كاميرا 200MP، قلم S Pen، ذاكرة 12GB.',         specs: { Processor: 'Snapdragon 8 Gen 3', Camera: '200MP Quad', RAM: '12GB', Display: '6.8" AMOLED' } },
+  { id: 3,  name: 'PlayStation 5',            nameAr: 'بلايستيشن 5',               price: 149.0, emoji: '🎮', img: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&q=80&auto=format&fit=crop', category: 'Gaming',    categoryAr: 'ألعاب',      badge: 'hot',  desc: 'Next-gen gaming console, 4K@120fps, ray tracing, 825GB SSD, DualSense controller.',     descAr: 'جهاز ألعاب الجيل الجديد، 4K بـ120fps، تتبع أشعة، SSD 825GB.',             specs: { GPU: '10.28 TFLOPS', Resolution: '4K 120fps', Storage: '825GB SSD', Audio: '3D Tempest' } },
+  { id: 4,  name: 'Xbox Series X',            nameAr: 'إكس بوكس سيريس إكس',        price: 129.0, emoji: '🕹️', img: 'https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=400&q=80&auto=format&fit=crop', category: 'Gaming',    categoryAr: 'ألعاب',      badge: 'sale', desc: 'Most powerful Xbox ever, 12 TFLOPS GPU, 4K@120fps, 1TB SSD, Quick Resume.',            descAr: 'أقوى Xbox على الإطلاق، GPU بـ12 TFLOPS، 4K بـ120fps، SSD 1TB.',           specs: { GPU: '12 TFLOPS', Resolution: '4K 120fps', Storage: '1TB SSD', RAM: '16GB GDDR6' } },
+  { id: 5,  name: 'Samsung 65" QLED 4K TV',  nameAr: 'تلفزيون سامسونج 65 QLED 4K', price: 399.0, emoji: '📺', img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&q=80&auto=format&fit=crop', category: 'TVs',       categoryAr: 'تلفزيونات',  badge: 'hot',  desc: 'Quantum HDR, 120Hz, Smart TV with Tizen OS, Dolby Atmos, built-in Alexa & Bixby.',     descAr: 'Quantum HDR، 120Hz، تلفاز ذكي بنظام Tizen، Dolby Atmos، Alexa.',        specs: { Panel: 'QLED', Resolution: '4K UHD', Refresh: '120Hz', HDR: 'Quantum HDR 2000' } },
+  { id: 6,  name: 'LG C3 OLED 55"',          nameAr: 'إل جي OLED C3 55 بوصة',     price: 349.0, emoji: '🖥️', img: 'https://images.unsplash.com/photo-1571415060716-baff5f717c37?w=400&q=80&auto=format&fit=crop', category: 'TVs',       categoryAr: 'تلفزيونات',  badge: 'new',  desc: 'Perfect blacks, OLED evo panel, 4K 120Hz, G-Sync, FreeSync, webOS 23, Dolby Vision.',  descAr: 'لوح OLED evo، 4K بـ120Hz، G-Sync، webOS 23، Dolby Vision IQ.',           specs: { Panel: 'OLED evo', Resolution: '4K', Refresh: '120Hz', Gaming: 'G-Sync + FreeSync' } },
+  { id: 7,  name: 'MacBook Pro M3',           nameAr: 'ماك بوك برو M3',             price: 489.0, emoji: '💻', img: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80&auto=format&fit=crop', category: 'Laptops',   categoryAr: 'لابتوب',     badge: 'new',  desc: 'Apple M3 chip, 18-hour battery, Liquid Retina XDR display, 16GB RAM, 512GB SSD.',     descAr: 'شريحة Apple M3، بطارية 18 ساعة، شاشة Liquid Retina XDR، 16GB RAM.',      specs: { Chip: 'Apple M3', RAM: '16GB', Storage: '512GB SSD', Battery: '18 hours' } },
+  { id: 8,  name: 'AirPods Pro 2',            nameAr: 'إيربودز برو 2',              price: 79.0,  emoji: '🎧', img: 'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=400&q=80&auto=format&fit=crop', category: 'Audio',     categoryAr: 'صوتيات',     badge: 'hot',  desc: 'Active noise cancellation, Adaptive Audio, H2 chip, 30hr battery, USB-C case.',        descAr: 'إلغاء ضجيج نشط، صوت تكيفي، شريحة H2، بطارية 30 ساعة.',                  specs: { Chip: 'Apple H2', ANC: 'Adaptive ANC', Battery: '30hr total', Case: 'USB-C MagSafe' } },
+  { id: 9,  name: 'iPad Pro 12.9"',           nameAr: 'آيباد برو 12.9 بوصة',       price: 349.0, emoji: '📟', img: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&q=80&auto=format&fit=crop', category: 'Tablets',   categoryAr: 'أجهزة لوحية', badge: 'new',  desc: 'M2 chip, Liquid Retina XDR, 12MP camera, 5G, Apple Pencil 2 support, 256GB.',         descAr: 'شريحة M2، شاشة Liquid Retina XDR، كاميرا 12MP، 5G، دعم Apple Pencil 2.', specs: { Chip: 'Apple M2', Display: '12.9" XDR', Storage: '256GB', Connectivity: '5G + WiFi 6E' } },
+  { id: 10, name: 'RTX 4080 Super GPU',       nameAr: 'كارت شاشة RTX 4080 سوبر',   price: 249.0, emoji: '⚡', img: 'https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&q=80&auto=format&fit=crop', category: 'Gaming',    categoryAr: 'ألعاب',      badge: 'sale', desc: 'NVIDIA Ada Lovelace, 16GB GDDR6X, DLSS 3, ray tracing, 4K gaming powerhouse.',         descAr: 'بنية NVIDIA Ada Lovelace، 16GB GDDR6X، DLSS 3، تتبع أشعة، ألعاب 4K.',    specs: { VRAM: '16GB GDDR6X', Architecture: 'Ada Lovelace', TDP: '320W', Ports: '3x DP + HDMI' } },
+  { id: 11, name: 'Sony WH-1000XM5',          nameAr: 'سوني WH-1000XM5',            price: 89.0,  emoji: '🎵', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80&auto=format&fit=crop', category: 'Audio',     categoryAr: 'صوتيات',     badge: 'sale', desc: 'Industry-leading ANC, 30hr battery, Multipoint, LDAC hi-res audio, speak-to-chat.',   descAr: 'إلغاء ضجيج رائد في الصناعة، بطارية 30 ساعة، صوت LDAC عالي الدقة.',       specs: { ANC: 'Industry-leading', Battery: '30 hours', Driver: '30mm', Codec: 'LDAC Hi-Res' } },
+  { id: 12, name: 'Apple Watch Ultra 2',      nameAr: 'ساعة آبل ألترا 2',           price: 129.0, emoji: '⌚', img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80&auto=format&fit=crop', category: 'Wearables', categoryAr: 'إكسسوارات',  badge: 'new',  desc: 'S9 chip, titanium case, 60hr battery, dual-frequency GPS, 100m water resistance.',     descAr: 'شريحة S9، علبة تيتانيوم، بطارية 60 ساعة، GPS ثنائي التردد، مقاومة ماء 100م.',specs: { Chip: 'Apple S9', Case: 'Titanium', Battery: '60 hours', Water: '100m WR' } },
 ]
 
 const ORDERS: Order[] = []
@@ -142,22 +142,31 @@ const footerHTML = `
 </footer>`
 
 const page = (title: string, breadcrumb: string, body: string, meta = '') => `<!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="${meta || 'Kuwait Store - Premium online shopping in Kuwait.'}"/>
-  <title>${title} | Kuwait Store</title>
+  <meta name="description" content="${meta || 'Kuwait Store - متجر الإلكترونيات الأول في الكويت.'}"/>
+  <title>${title} | متجر الكويت</title>
   <link rel="stylesheet" href="/style.css"/>
   <link rel="icon" href="/logo.png"/>
-  <script>document.documentElement.dataset.theme=localStorage.getItem('theme')||'light'</script>
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme') || 'light'
+      document.documentElement.dataset.theme = t
+      var l = localStorage.getItem('lang') || 'ar'
+      document.documentElement.lang = l
+      document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr'
+    })()
+  </script>
 </head>
 <body>
   ${topbarHTML}
   ${navHTML}
-  ${breadcrumb ? `<div class="breadcrumb"><a href="/" data-en="Home" data-ar="الرئيسية">Home</a> › ${breadcrumb}</div>` : ''}
+  ${breadcrumb ? `<div class="breadcrumb"><a href="/" data-en="Home" data-ar="الرئيسية">الرئيسية</a> › ${breadcrumb}</div>` : ''}
   ${body}
   ${whatsappHTML}
+  <button class="lang-float-btn" id="lang-float-btn" onclick="toggleLang()" title="تغيير اللغة / Change Language">EN</button>
   <div class="toast" id="toast"></div>
   ${footerHTML}
   <script src="/app.js"></script>
@@ -168,7 +177,8 @@ const productCard = (p: Product) => `
 <div class="product-card">
   <div class="product-img" onclick="location.href='/products/${p.id}'">
     ${p.badge ? `<div class="product-badge" style="background:${badgeColors[p.badge]}"><span data-en="${p.badge.toUpperCase()}" data-ar="${badgeAr[p.badge]}">${p.badge.toUpperCase()}</span></div>` : ''}
-    ${p.emoji}
+    <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentNode.querySelector('.emoji-fb').style.display='block'"/>
+    <span class="emoji-fb" style="display:none;font-size:4rem">${p.emoji}</span>
   </div>
   <div class="product-info">
     <div class="product-tag" data-en="${p.category}" data-ar="${p.categoryAr}">${p.category}</div>
@@ -176,7 +186,7 @@ const productCard = (p: Product) => `
     <p data-en="${p.desc.slice(0,80)}..." data-ar="${p.descAr.slice(0,80)}...">${p.desc.slice(0,80)}...</p>
     <div class="product-footer">
       <span class="price">${p.price.toFixed(3)} KD</span>
-      <button class="add-cart" onclick="addToCart('${p.name}',${p.price})"><span data-en="+ Cart" data-ar="+ السلة">+ Cart</span></button>
+      <button class="add-cart" onclick="addToCart('${p.name}',${p.price},1,'${p.nameAr}')"><span data-en="+ Cart" data-ar="+ السلة">+ Cart</span></button>
     </div>
   </div>
 </div>`
@@ -336,7 +346,10 @@ app.get('/products/:id', (req, res) => {
   res.type('html').send(page(product.name, `<a href="/products" data-en="Products" data-ar="المنتجات">Products</a> › <span data-en="${product.name}" data-ar="${product.nameAr}">${product.name}</span>`, `
     <section>
       <div class="product-detail">
-        <div class="product-detail-img">${product.emoji}</div>
+        <div class="product-detail-img">
+          <img src="${product.img}" alt="${product.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+          <span style="display:none;font-size:6rem">${product.emoji}</span>
+        </div>
         <div class="product-detail-info">
           <div class="product-tag" data-en="${product.category}" data-ar="${product.categoryAr}">${product.category}</div>
           <h1 data-en="${product.name}" data-ar="${product.nameAr}">${product.name}</h1>
@@ -369,26 +382,47 @@ app.get('/products/:id', (req, res) => {
 
 // ── CART ──
 app.get('/cart', (_req, res) => {
-  res.type('html').send(page('My Cart', 'Cart', `
+  res.type('html').send(page('سلتي | My Cart', 'Cart', `
     <section>
-      <h2 class="section-title">🛒 <span data-en="My Cart" data-ar="سلتي">My Cart</span></h2>
+      <h2 class="section-title">🛒 <span data-en="My Cart" data-ar="سلتي">سلتي</span></h2>
       <div id="cart-content"></div>
     </section>
     <script>
-    const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-    const el = document.getElementById('cart-content');
-    if(!cart.length){
-      el.innerHTML='<div style="background:var(--card);padding:3rem;border-radius:12px;text-align:center;box-shadow:var(--shadow)"><div style="font-size:4rem;margin-bottom:1rem">🛒</div><h3 style="margin-bottom:0.5rem">Your cart is empty</h3><p style="color:var(--muted);margin-bottom:1.5rem">Add some products to get started</p><a href="/products" class="btn btn-primary">Browse Products</a></div>';
-    } else {
-      let total=0;
-      let rows=cart.map((it,idx)=>{
-        const sub=it.price*it.qty; total+=sub;
-        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid var(--border);gap:1rem"><div style="display:flex;align-items:center;gap:1rem"><button onclick="removeItem('+idx+')" style="background:rgba(200,16,46,0.1);border:none;color:var(--primary);border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:1rem">×</button><span style="color:var(--text)">'+it.name+'</span></div><div style="display:flex;align-items:center;gap:1rem"><button onclick="changeQty('+idx+',-1)" style="background:var(--light);border:2px solid var(--border);border-radius:4px;width:28px;height:28px;cursor:pointer;color:var(--text)">−</button><span style="min-width:24px;text-align:center;font-weight:700;color:var(--text)">'+it.qty+'</span><button onclick="changeQty('+idx+',1)" style="background:var(--light);border:2px solid var(--border);border-radius:4px;width:28px;height:28px;cursor:pointer;color:var(--text)">+</button><span style="color:var(--primary);font-weight:700;min-width:80px;text-align:right">'+sub.toFixed(3)+' KD</span></div></div>';
-      }).join('');
-      el.innerHTML='<div style="background:var(--card);padding:2rem;border-radius:12px;box-shadow:var(--shadow)">'+rows+'<div style="display:flex;justify-content:space-between;padding:1.5rem 0 1rem;font-size:1.2rem;font-weight:700;color:var(--text)"><span>Total</span><span style="color:var(--primary)">'+total.toFixed(3)+' KD</span></div><div style="display:flex;gap:1rem;flex-wrap:wrap"><a href="/products" class="btn btn-outline" style="border-color:var(--border);color:var(--text)">← Continue Shopping</a><a href="/checkout" class="btn btn-primary" style="flex:1;text-align:center">Checkout →</a></div></div>';
-    }
-    function removeItem(idx){const c=JSON.parse(localStorage.getItem('cart')||'[]');c.splice(idx,1);localStorage.setItem('cart',JSON.stringify(c));location.reload();}
-    function changeQty(idx,d){const c=JSON.parse(localStorage.getItem('cart')||'[]');c[idx].qty+=d;if(c[idx].qty<1)c.splice(idx,1);localStorage.setItem('cart',JSON.stringify(c));location.reload();}
+    (function(){
+      const lang = localStorage.getItem('lang') || 'ar';
+      const isAr = lang === 'ar';
+      const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+      const el = document.getElementById('cart-content');
+      if(!cart.length){
+        el.innerHTML='<div style="background:var(--card);padding:3rem;border-radius:12px;text-align:center;box-shadow:var(--shadow)">'
+          +'<div style="font-size:4rem;margin-bottom:1rem">🛒</div>'
+          +'<h3 style="margin-bottom:0.5rem">'+(isAr?'سلتك فارغة':'Your cart is empty')+'</h3>'
+          +'<p style="color:var(--muted);margin-bottom:1.5rem">'+(isAr?'أضف منتجات للبدء':'Add some products to get started')+'</p>'
+          +'<a href="/products" class="btn btn-primary">'+(isAr?'تصفح المنتجات':'Browse Products')+'</a></div>';
+      } else {
+        let total=0;
+        let rows=cart.map((it,idx)=>{
+          const sub=it.price*it.qty; total+=sub;
+          const name = isAr && it.nameAr ? it.nameAr : it.name;
+          return '<div class="cart-row">'
+            +'<div class="cart-row-left"><button onclick="removeItem('+idx+')" class="cart-remove">×</button>'
+            +'<span class="cart-name">'+name+'</span></div>'
+            +'<div class="cart-row-right">'
+            +'<button onclick="changeQty('+idx+',-1)" class="qty-btn">−</button>'
+            +'<span class="qty-val">'+it.qty+'</span>'
+            +'<button onclick="changeQty('+idx+',1)" class="qty-btn">+</button>'
+            +'<span class="cart-sub">'+sub.toFixed(3)+' KD</span></div></div>';
+        }).join('');
+        el.innerHTML='<div class="cart-box">'+rows
+          +'<div class="cart-total"><span>'+(isAr?'المجموع':'Total')+'</span><span style="color:var(--primary)">'+total.toFixed(3)+' KD</span></div>'
+          +'<div class="cart-actions">'
+          +'<a href="/products" class="btn btn-outline">'+(isAr?'← متابعة التسوق':'← Continue Shopping')+'</a>'
+          +'<a href="/checkout" class="btn btn-primary" style="flex:1;text-align:center">'+(isAr?'إتمام الشراء →':'Checkout →')+'</a>'
+          +'</div></div>';
+      }
+      function removeItem(idx){const c=JSON.parse(localStorage.getItem('cart')||'[]');c.splice(idx,1);localStorage.setItem('cart',JSON.stringify(c));location.reload();}
+      function changeQty(idx,d){const c=JSON.parse(localStorage.getItem('cart')||'[]');c[idx].qty+=d;if(c[idx].qty<1)c.splice(idx,1);localStorage.setItem('cart',JSON.stringify(c));location.reload();}
+    })();
     </script>
   `))
 })

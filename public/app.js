@@ -1,5 +1,10 @@
-// Apply theme immediately to prevent flash
-;(function(){ document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light' })()
+// Apply theme + language immediately to prevent flash
+;(function(){
+  document.documentElement.dataset.theme = localStorage.getItem('theme') || 'light'
+  var l = localStorage.getItem('lang') || 'ar'
+  document.documentElement.lang = l
+  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr'
+})()
 
 // ── THEME ──
 function toggleTheme() {
@@ -20,12 +25,16 @@ function applyLang(l) {
   document.querySelectorAll('[data-en-ph]').forEach(el => {
     el.placeholder = l === 'ar' ? (el.dataset.arPh || el.dataset.enPh) : el.dataset.enPh
   })
+  // Nav lang btn (top)
   const lb = document.getElementById('lang-btn')
   if (lb) lb.textContent = l === 'ar' ? 'EN' : 'عربي'
+  // Float lang btn (bottom)
+  const flb = document.getElementById('lang-float-btn')
+  if (flb) flb.textContent = l === 'ar' ? 'EN' : 'عربي'
 }
 
 function toggleLang() {
-  const l = (localStorage.getItem('lang') || 'en') === 'ar' ? 'en' : 'ar'
+  const l = (localStorage.getItem('lang') || 'ar') === 'ar' ? 'en' : 'ar'
   localStorage.setItem('lang', l)
   applyLang(l)
 }
@@ -61,16 +70,20 @@ function updateNavAuth() {
 }
 
 // ── CART ──
-function addToCart(name, price, qty) {
+function addToCart(name, price, qty, nameAr) {
   qty = qty || 1
   let cart = JSON.parse(localStorage.getItem('cart') || '[]')
   const ex = cart.find(i => i.name === name)
-  if (ex) ex.qty += qty; else cart.push({ name, price, qty })
+  if (ex) ex.qty += qty
+  else cart.push({ name, nameAr: nameAr || name, price, qty })
   localStorage.setItem('cart', JSON.stringify(cart))
   updateCartCount()
+  const lang = localStorage.getItem('lang') || 'ar'
+  const displayName = (lang === 'ar' && nameAr) ? nameAr : name
+  const msg = lang === 'ar' ? ('✅ تمت الإضافة: ' + displayName) : ('✅ ' + name + ' added to cart!')
   const t = document.getElementById('toast')
   if (t) {
-    t.textContent = '✅ ' + name + ' added to cart!'
+    t.textContent = msg
     t.classList.add('show')
     setTimeout(() => t.classList.remove('show'), 2500)
   }
@@ -87,7 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const t = document.documentElement.dataset.theme || 'light'
   const tb = document.getElementById('theme-btn')
   if (tb) tb.textContent = t === 'dark' ? '☀️' : '🌙'
-  applyLang(localStorage.getItem('lang') || 'en')
+  const l = localStorage.getItem('lang') || 'ar'
+  applyLang(l)
   updateNavAuth()
   updateCartCount()
 })

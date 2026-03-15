@@ -28,26 +28,26 @@ type Order = {
 
 // ── PRODUCTS ──
 let PRODUCTS: Product[] = [
-  { id: 1,  name: 'Premium Watch',    nameAr: 'ساعة فاخرة',       price: 12.5,  emoji: '⌚', category: 'Accessories', categoryAr: 'إكسسوارات', badge: 'hot',  desc: 'Elegant design, water resistant 50m, stainless steel case with sapphire glass.',         descAr: 'تصميم أنيق، مقاوم للماء 50م، علبة ستانلس ستيل بزجاج ياقوتي.',      specs: { Brand: 'Kuwait Timepieces', Material: 'Stainless Steel', Water: '50m resistant', Warranty: '2 years' } },
-  { id: 2,  name: 'Leather Bag',      nameAr: 'حقيبة جلدية',      price: 8.75,  emoji: '👜', category: 'Bags',        categoryAr: 'حقائب',      badge: '',     desc: 'Handcrafted genuine leather bag with multiple compartments and gold-tone hardware.',     descAr: 'حقيبة جلد أصلي مصنوعة يدوياً مع حجرات متعددة وأجهزة ذهبية اللون.', specs: { Material: 'Genuine Leather', Size: '35x25x12 cm', Color: 'Brown/Black', Pockets: '5 compartments' } },
-  { id: 3,  name: 'Sunglasses',       nameAr: 'نظارات شمسية',     price: 5.5,   emoji: '🕶️', category: 'Accessories', categoryAr: 'إكسسوارات', badge: 'sale', desc: 'UV400 protection, polarized lenses, lightweight titanium frame, comes with case.',      descAr: 'حماية UV400، عدسات مستقطبة، إطار تيتانيوم خفيف، تأتي مع حافظة.',    specs: { Lenses: 'Polarized UV400', Frame: 'Titanium', Colors: 'Black/Gold', Warranty: '1 year' } },
-  { id: 4,  name: 'Perfume Set',      nameAr: 'طقم عطور',         price: 15.0,  emoji: '🌸', category: 'Beauty',      categoryAr: 'جمال',       badge: 'new',  desc: 'Luxury Arabian perfume set, 3 bottles 50ml each. Floral, Musk, and Oud.',             descAr: 'طقم عطور عربي فاخر، 3 قوارير 50مل. زهور، مسك، وعود.',               specs: { Bottles: '3 × 50ml', Notes: 'Floral, Musk, Oud', Origin: 'Kuwait', Type: 'EDP' } },
-  { id: 5,  name: 'Silk Scarf',       nameAr: 'وشاح حرير',        price: 6.25,  emoji: '🧣', category: 'Fashion',     categoryAr: 'أزياء',      badge: '',     desc: '100% pure silk scarf with vibrant hand-painted pattern, gift box included.',          descAr: 'وشاح حرير خالص 100٪ بنقشة مرسومة يدوياً، يشمل علبة هدايا.',         specs: { Material: '100% Silk', Size: '90x90 cm', Care: 'Dry clean only', Gift: 'Box included' } },
-  { id: 6,  name: 'Gold Bracelet',    nameAr: 'سوار ذهبي',        price: 45.0,  emoji: '📿', category: 'Jewelry',     categoryAr: 'مجوهرات',    badge: 'hot',  desc: '18k gold plated bracelet, adjustable size 16-20cm, hypoallergenic.',                  descAr: 'سوار مطلي بالذهب عيار 18، مقاس قابل للتعديل 16-20سم.',              specs: { Material: '18k Gold Plated', Size: '16-20 cm', Hypoallergenic: 'Yes', Warranty: '1 year' } },
-  { id: 7,  name: 'Oud Perfume',      nameAr: 'عطر العود',        price: 22.0,  emoji: '🪵', category: 'Beauty',      categoryAr: 'جمال',       badge: 'new',  desc: 'Authentic Kuwaiti oud, aged 10 years, rich and long-lasting 24h fragrance.',          descAr: 'عود كويتي أصيل، معتق 10 سنوات، عطر غني يدوم 24 ساعة.',              specs: { Volume: '50ml', Type: 'Pure Oud', Lasting: '24 hours', Origin: 'Kuwait' } },
-  { id: 8,  name: 'Abaya',            nameAr: 'عباءة',             price: 18.5,  emoji: '👗', category: 'Fashion',     categoryAr: 'أزياء',      badge: '',     desc: 'Premium quality fabric abaya with elegant silver embroidery, available in all sizes.', descAr: 'عباءة من قماش عالي الجودة مع تطريز فضي أنيق، متوفرة بجميع المقاسات.',specs: { Fabric: 'Nida', Sizes: 'XS – 3XL', Color: 'Black', Care: 'Hand wash' } },
-  { id: 9,  name: 'Date Gift Box',    nameAr: 'صندوق تمر هدية',   price: 9.0,   emoji: '🎁', category: 'Food',        categoryAr: 'أغذية',      badge: 'new',  desc: 'Premium Kuwaiti Medjool dates, luxury handcrafted box, 500g.',                         descAr: 'تمر مجدول كويتي فاخر، صندوق فاخر مصنوع يدوياً، 500 جرام.',          specs: { Weight: '500g', Type: 'Medjool', Box: 'Luxury wood', Shelf: '3 months' } },
-  { id: 10, name: 'Pearl Necklace',   nameAr: 'عقد لؤلؤ',         price: 35.0,  emoji: '💎', category: 'Jewelry',     categoryAr: 'مجوهرات',    badge: 'sale', desc: 'Freshwater pearl necklace, 45cm, sterling silver clasp, velvet pouch included.',       descAr: 'عقد لؤلؤ طبيعي، 45سم، إغلاق فضة استرليني، يشمل حقيبة مخملية.',     specs: { Pearls: 'Freshwater', Length: '45 cm', Clasp: 'Sterling Silver', Includes: 'Velvet pouch' } },
-  { id: 11, name: 'Arabic Coffee Set',nameAr: 'طقم قهوة عربية',   price: 28.0,  emoji: '☕', category: 'Home',        categoryAr: 'منزل',       badge: 'hot',  desc: 'Traditional dallah coffee pot + 6 cups, handcrafted brass with engraving.',             descAr: 'دلة قهوة تقليدية + 6 فناجين، نحاس مصنوع يدوياً مع نقوش.',           specs: { Material: 'Brass', Set: '1 dallah + 6 cups', Origin: 'Kuwait', Weight: '1.2 kg' } },
-  { id: 12, name: 'Kandura Fabric',   nameAr: 'قماش كندورة',      price: 14.0,  emoji: '🧵', category: 'Fashion',     categoryAr: 'أزياء',      badge: '',     desc: 'High quality white kandura fabric, 3 meters, wrinkle-resistant, machine washable.',    descAr: 'قماش كندورة أبيض عالي الجودة، 3 أمتار، مقاوم للتجعد.',              specs: { Length: '3 meters', Width: '150 cm', Material: 'Cotton blend', Care: 'Machine wash' } },
+  { id: 1,  name: 'iPhone 15 Pro Max',      nameAr: 'آيفون 15 برو ماكس',    price: 319.0, emoji: '📱', category: 'Phones',   categoryAr: 'هواتف',     badge: 'hot',  desc: 'Apple A17 Pro chip, 48MP camera, titanium design, USB-C, ProMotion 120Hz display.',      descAr: 'شريحة Apple A17 Pro، كاميرا 48MP، تصميم تيتانيوم، USB-C، شاشة 120Hz.',   specs: { Chip: 'A17 Pro', Camera: '48MP Triple', Display: '6.7" OLED 120Hz', Storage: '256GB' } },
+  { id: 2,  name: 'Samsung Galaxy S24 Ultra',nameAr: 'سامسونج جالاكسي S24 ألترا', price: 289.0, emoji: '📲', category: 'Phones',   categoryAr: 'هواتف',     badge: 'new',  desc: 'Snapdragon 8 Gen 3, 200MP camera, built-in S Pen, 12GB RAM, 6.8" Dynamic AMOLED.',    descAr: 'معالج Snapdragon 8 Gen 3، كاميرا 200MP، قلم S Pen، ذاكرة 12GB.',         specs: { Processor: 'Snapdragon 8 Gen 3', Camera: '200MP Quad', RAM: '12GB', Display: '6.8" AMOLED' } },
+  { id: 3,  name: 'PlayStation 5',          nameAr: 'بلايستيشن 5',           price: 149.0, emoji: '🎮', category: 'Gaming',   categoryAr: 'ألعاب',     badge: 'hot',  desc: 'Next-gen gaming console, 4K@120fps, ray tracing, 825GB SSD, DualSense controller.',     descAr: 'جهاز ألعاب الجيل الجديد، 4K بـ120fps، تتبع أشعة، SSD 825GB.',             specs: { GPU: '10.28 TFLOPS', Resolution: '4K 120fps', Storage: '825GB SSD', Audio: '3D Tempest' } },
+  { id: 4,  name: 'Xbox Series X',          nameAr: 'إكس بوكس سيريس إكس',   price: 129.0, emoji: '🕹️', category: 'Gaming',   categoryAr: 'ألعاب',     badge: 'sale', desc: 'Most powerful Xbox ever, 12 TFLOPS GPU, 4K@120fps, 1TB SSD, Quick Resume.',            descAr: 'أقوى Xbox على الإطلاق، GPU بـ12 TFLOPS، 4K بـ120fps، SSD 1TB.',           specs: { GPU: '12 TFLOPS', Resolution: '4K 120fps', Storage: '1TB SSD', RAM: '16GB GDDR6' } },
+  { id: 5,  name: 'Samsung 65" QLED 4K TV', nameAr: 'تلفزيون سامسونج 65 QLED 4K', price: 399.0, emoji: '📺', category: 'TVs',  categoryAr: 'تلفزيونات', badge: 'hot',  desc: 'Quantum HDR, 120Hz, Smart TV with Tizen OS, Dolby Atmos, built-in Alexa & Bixby.',     descAr: 'Quantum HDR، 120Hz، تلفاز ذكي بنظام Tizen، Dolby Atmos، Alexa.',        specs: { Panel: 'QLED', Resolution: '4K UHD', Refresh: '120Hz', HDR: 'Quantum HDR 2000' } },
+  { id: 6,  name: 'LG C3 OLED 55"',        nameAr: 'إل جي OLED C3 55 بوصة', price: 349.0, emoji: '🖥️', category: 'TVs',    categoryAr: 'تلفزيونات', badge: 'new',  desc: 'Perfect blacks, OLED evo panel, 4K 120Hz, G-Sync, FreeSync, webOS 23, Dolby Vision.',  descAr: 'لوح OLED evo، 4K بـ120Hz، G-Sync، webOS 23، Dolby Vision IQ.',           specs: { Panel: 'OLED evo', Resolution: '4K', Refresh: '120Hz', Gaming: 'G-Sync + FreeSync' } },
+  { id: 7,  name: 'MacBook Pro M3',         nameAr: 'ماك بوك برو M3',        price: 489.0, emoji: '💻', category: 'Laptops', categoryAr: 'لابتوب',    badge: 'new',  desc: 'Apple M3 chip, 18-hour battery, Liquid Retina XDR display, 16GB RAM, 512GB SSD.',     descAr: 'شريحة Apple M3، بطارية 18 ساعة، شاشة Liquid Retina XDR، 16GB RAM.',      specs: { Chip: 'Apple M3', RAM: '16GB', Storage: '512GB SSD', Battery: '18 hours' } },
+  { id: 8,  name: 'AirPods Pro 2',         nameAr: 'إيربودز برو 2',          price: 79.0,  emoji: '🎧', category: 'Audio',   categoryAr: 'صوتيات',    badge: 'hot',  desc: 'Active noise cancellation, Adaptive Audio, H2 chip, 30hr battery, USB-C case.',        descAr: 'إلغاء ضجيج نشط، صوت تكيفي، شريحة H2، بطارية 30 ساعة.',                  specs: { Chip: 'Apple H2', ANC: 'Adaptive ANC', Battery: '30hr total', Case: 'USB-C MagSafe' } },
+  { id: 9,  name: 'iPad Pro 12.9"',        nameAr: 'آيباد برو 12.9 بوصة',   price: 349.0, emoji: '📟', category: 'Tablets', categoryAr: 'أجهزة لوحية',badge: 'new',  desc: 'M2 chip, Liquid Retina XDR, 12MP camera, 5G, Apple Pencil 2 support, 256GB.',         descAr: 'شريحة M2، شاشة Liquid Retina XDR، كاميرا 12MP، 5G، دعم Apple Pencil 2.', specs: { Chip: 'Apple M2', Display: '12.9" XDR', Storage: '256GB', Connectivity: '5G + WiFi 6E' } },
+  { id: 10, name: 'RTX 4080 Super GPU',    nameAr: 'كارت شاشة RTX 4080 سوبر', price: 249.0, emoji: '⚡', category: 'Gaming', categoryAr: 'ألعاب',     badge: 'sale', desc: 'NVIDIA Ada Lovelace, 16GB GDDR6X, DLSS 3, ray tracing, 4K gaming powerhouse.',         descAr: 'بنية NVIDIA Ada Lovelace، 16GB GDDR6X، DLSS 3، تتبع أشعة، ألعاب 4K.',    specs: { VRAM: '16GB GDDR6X', Architecture: 'Ada Lovelace', TDP: '320W', Ports: '3x DP + HDMI' } },
+  { id: 11, name: 'Sony WH-1000XM5',       nameAr: 'سوني WH-1000XM5',       price: 89.0,  emoji: '🎵', category: 'Audio',   categoryAr: 'صوتيات',    badge: 'sale', desc: 'Industry-leading ANC, 30hr battery, Multipoint, LDAC hi-res audio, speak-to-chat.',   descAr: 'إلغاء ضجيج رائد في الصناعة، بطارية 30 ساعة، صوت LDAC عالي الدقة.',       specs: { ANC: 'Industry-leading', Battery: '30 hours', Driver: '30mm', Codec: 'LDAC Hi-Res' } },
+  { id: 12, name: 'Apple Watch Ultra 2',   nameAr: 'ساعة آبل ألترا 2',      price: 129.0, emoji: '⌚', category: 'Wearables',categoryAr: 'إكسسوارات', badge: 'new',  desc: 'S9 chip, titanium case, 60hr battery, dual-frequency GPS, 100m water resistance.',     descAr: 'شريحة S9، علبة تيتانيوم، بطارية 60 ساعة، GPS ثنائي التردد، مقاومة ماء 100م.',specs: { Chip: 'Apple S9', Case: 'Titanium', Battery: '60 hours', Water: '100m WR' } },
 ]
 
 const ORDERS: Order[] = []
 
 // ── HELPERS ──
-const badgeColors: Record<string, string> = { new: '#007a3d', sale: '#c8102e', hot: '#f4a800' }
+const badgeColors: Record<string, string> = { new: '#6366f1', sale: '#06b6d4', hot: '#f59e0b' }
 const badgeAr: Record<string, string> = { new: 'جديد', sale: 'تخفيض', hot: 'رائج' }
-const categoryArMap: Record<string, string> = { Accessories:'إكسسوارات', Bags:'حقائب', Beauty:'جمال', Fashion:'أزياء', Food:'أغذية', Home:'منزل', Jewelry:'مجوهرات' }
+const categoryArMap: Record<string, string> = { Phones:'هواتف', Gaming:'ألعاب', TVs:'تلفزيونات', Laptops:'لابتوب', Audio:'صوتيات', Tablets:'أجهزة لوحية', Wearables:'إكسسوارات', Accessories:'إكسسوارات', Bags:'حقائب', Beauty:'جمال', Fashion:'أزياء', Food:'أغذية', Home:'منزل', Jewelry:'مجوهرات' }
 
 function isAdmin(req: express.Request): boolean {
   const cookies = Object.fromEntries(
@@ -183,50 +183,94 @@ const productCard = (p: Product) => `
 
 // ── HOME ──
 app.get('/', (_req, res) => {
-  const featured = PRODUCTS.filter(p => p.badge).slice(0, 6)
+  const featured = PRODUCTS.filter(p => p.badge === 'hot').slice(0, 6)
+  const cats = [
+    { icon: '📱', name: 'Phones',   nameAr: 'هواتف',     cat: 'Phones' },
+    { icon: '🎮', name: 'Gaming',   nameAr: 'ألعاب',     cat: 'Gaming' },
+    { icon: '📺', name: 'TVs',      nameAr: 'تلفزيونات', cat: 'TVs' },
+    { icon: '💻', name: 'Laptops',  nameAr: 'لابتوب',    cat: 'Laptops' },
+    { icon: '🎧', name: 'Audio',    nameAr: 'صوتيات',    cat: 'Audio' },
+    { icon: '📟', name: 'Tablets',  nameAr: 'لوحيات',    cat: 'Tablets' },
+    { icon: '⌚', name: 'Wearables',nameAr: 'إكسسوارات', cat: 'Wearables' },
+    { icon: '⚡', name: 'All',      nameAr: 'الكل',      cat: '' },
+  ]
+  const catCards = cats.map(c => `
+    <a class="cat-card" href="/products${c.cat ? '?cat='+c.cat : ''}">
+      <span class="cat-card-icon">${c.icon}</span>
+      <div class="cat-card-name" data-en="${c.name}" data-ar="${c.nameAr}">${c.name}</div>
+    </a>`).join('')
+
   res.type('html').send(page('Home', '', `
     <div class="hero">
-      <h1><span data-en="Welcome to" data-ar="مرحباً بكم في">Welcome to</span> <span>Kuwait Store</span> 🇰🇼</h1>
-      <p data-en="Your trusted online store in Kuwait. Premium products, fast delivery, unbeatable prices." data-ar="متجرك الموثوق في الكويت. منتجات فاخرة، توصيل سريع، أسعار لا تقبل المنافسة.">Your trusted online store in Kuwait. Premium products, fast delivery, unbeatable prices.</p>
-      <div class="hero-btns">
-        <a href="/products" class="btn btn-primary" data-en="Shop Now" data-ar="تسوق الآن">Shop Now</a>
-        <a href="/about" class="btn btn-outline" data-en="About Us" data-ar="عن المتجر">About Us</a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="num">500+</div><div class="lbl" data-en="Products" data-ar="منتج">Products</div></div>
-        <div class="hero-stat"><div class="num">10K+</div><div class="lbl" data-en="Customers" data-ar="عميل">Customers</div></div>
-        <div class="hero-stat"><div class="num">4.9★</div><div class="lbl" data-en="Rating" data-ar="تقييم">Rating</div></div>
-        <div class="hero-stat"><div class="num" data-en="Same Day" data-ar="نفس اليوم">Same Day</div><div class="lbl" data-en="Delivery" data-ar="توصيل">Delivery</div></div>
+      <div class="hero-bg-grid"></div>
+      <div class="hero-glow-1"></div>
+      <div class="hero-glow-2"></div>
+      <div class="hero-content">
+        <div class="hero-badge">⚡ <span data-en="NEW ARRIVALS 2025" data-ar="وصل حديثاً 2025">NEW ARRIVALS 2025</span></div>
+        <h1>
+          <span data-en="Shop the Latest" data-ar="تسوق أحدث">Shop the Latest</span>
+          <span class="line2 gradient-text" data-en="Technology" data-ar="التكنولوجيا">Technology</span>
+        </h1>
+        <p data-en="Kuwait's #1 electronics store — phones, gaming, TVs, laptops and more. Same-day delivery." data-ar="متجر الإلكترونيات الأول في الكويت — هواتف، ألعاب، تلفزيونات، لابتوب والمزيد. توصيل في نفس اليوم.">Kuwait's #1 electronics store — phones, gaming, TVs, laptops and more. Same-day delivery.</p>
+        <div class="hero-btns">
+          <a href="/products" class="btn btn-primary" data-en="🛍️ Shop Now" data-ar="🛍️ تسوق الآن">🛍️ Shop Now</a>
+          <a href="/products?cat=Gaming" class="btn btn-outline" data-en="🎮 Gaming Deals" data-ar="🎮 عروض الألعاب">🎮 Gaming Deals</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num">500+</div><div class="lbl" data-en="Products" data-ar="منتج">Products</div></div>
+          <div class="hero-stat"><div class="num">50K+</div><div class="lbl" data-en="Customers" data-ar="عميل">Customers</div></div>
+          <div class="hero-stat"><div class="num">4.9★</div><div class="lbl" data-en="Rating" data-ar="تقييم">Rating</div></div>
+          <div class="hero-stat"><div class="num" data-en="Same Day" data-ar="نفس اليوم">Same Day</div><div class="lbl" data-en="Delivery" data-ar="توصيل">Delivery</div></div>
+        </div>
       </div>
     </div>
+
     <div class="search-bar">
-      <form action="/products" method="GET" style="display:flex;width:100%;max-width:500px">
-        <input type="text" name="q" data-en-ph="Search for products..." data-ar-ph="ابحث عن منتجات..." placeholder="Search for products..."/>
+      <form action="/products" method="GET" style="display:flex;width:100%;max-width:580px">
+        <input type="text" name="q" data-en-ph="Search phones, TVs, gaming..." data-ar-ph="ابحث عن هواتف، تلفزيونات، ألعاب..." placeholder="Search phones, TVs, gaming..."/>
         <button type="submit">🔍</button>
       </form>
     </div>
+
+    <div class="categories-section">
+      <h2 data-en="Shop by Category" data-ar="تسوق حسب الفئة">Shop by Category</h2>
+      <div class="cat-cards-grid">${catCards}</div>
+    </div>
+
+    <div class="promo-banner">
+      <div class="promo-content">
+        <div class="promo-badge" data-en="LIMITED TIME" data-ar="عرض محدود">LIMITED TIME</div>
+        <h3 data-en="Gaming Week — Up to 30% OFF" data-ar="أسبوع الألعاب — خصم يصل إلى 30٪">Gaming Week — Up to 30% OFF</h3>
+        <p data-en="PS5, Xbox Series X, RTX 4080 and more. Don't miss out!" data-ar="PS5، Xbox Series X، RTX 4080 والمزيد. لا تفوت الفرصة!">PS5, Xbox Series X, RTX 4080 and more. Don't miss out!</p>
+        <a href="/products?cat=Gaming" class="btn btn-primary" style="margin-top:1.2rem;display:inline-block" data-en="Shop Gaming →" data-ar="تسوق الألعاب →">Shop Gaming →</a>
+      </div>
+      <div class="promo-emoji">🎮</div>
+    </div>
+
     <div class="features">
       <div class="features-grid">
-        <div class="feature-item"><div class="feature-icon">🚚</div><h3 data-en="Free Delivery" data-ar="توصيل مجاني">Free Delivery</h3><p data-en="On orders over 10 KD" data-ar="للطلبات فوق 10 دينار">On orders over 10 KD</p></div>
+        <div class="feature-item"><div class="feature-icon">🚀</div><h3 data-en="Same-Day Delivery" data-ar="توصيل في نفس اليوم">Same-Day Delivery</h3><p data-en="Order before 2PM, get it today" data-ar="اطلب قبل 2 ظهراً واستلمه اليوم">Order before 2PM, get it today</p></div>
         <div class="feature-item"><div class="feature-icon">🔒</div><h3 data-en="Secure Payment" data-ar="دفع آمن">Secure Payment</h3><p data-en="KNET, Visa, Mastercard & Cash" data-ar="كي نت، فيزا، ماستركارد ونقداً">KNET, Visa, Mastercard & Cash</p></div>
-        <div class="feature-item"><div class="feature-icon">↩️</div><h3 data-en="30-Day Returns" data-ar="إرجاع 30 يوم">30-Day Returns</h3><p data-en="Hassle-free return policy" data-ar="سياسة إرجاع سهلة">Hassle-free return policy</p></div>
-        <div class="feature-item"><div class="feature-icon">📞</div><h3 data-en="24/7 Support" data-ar="دعم 24/7">24/7 Support</h3><p data-en="WhatsApp & phone support" data-ar="دعم واتساب وهاتف">WhatsApp & phone support</p></div>
+        <div class="feature-item"><div class="feature-icon">✅</div><h3 data-en="Official Warranty" data-ar="ضمان رسمي">Official Warranty</h3><p data-en="All products have official warranty" data-ar="جميع المنتجات بضمان رسمي">All products have official warranty</p></div>
+        <div class="feature-item"><div class="feature-icon">💬</div><h3 data-en="24/7 Support" data-ar="دعم 24/7">24/7 Support</h3><p data-en="WhatsApp & phone support" data-ar="دعم واتساب وهاتف">WhatsApp & phone support</p></div>
       </div>
     </div>
+
     <section>
-      <h2 class="section-title">🔥 <span data-en="Featured Products" data-ar="منتجات مميزة">Featured Products</span></h2>
+      <h2 class="section-title">🔥 <span data-en="Hot Deals" data-ar="أقوى العروض">Hot Deals</span></h2>
       <div class="products-grid">${featured.map(productCard).join('')}</div>
-      <div style="text-align:center;margin-top:2rem">
+      <div style="text-align:center;margin-top:2.5rem">
         <a href="/products" class="btn btn-primary" data-en="View All Products →" data-ar="عرض جميع المنتجات →">View All Products →</a>
       </div>
     </section>
+
     <div class="testimonials">
       <div class="testimonials-inner">
-        <h2 data-en="What Our Customers Say" data-ar="ماذا يقول عملاؤنا">What Our Customers Say</h2>
+        <h2 data-en="What Customers Say" data-ar="ماذا يقول عملاؤنا">What Customers Say</h2>
         <div class="reviews-grid">
-          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"Amazing quality and super fast delivery! Got my order the same day."' data-ar='"جودة رائعة وتوصيل سريع جداً! وصل طلبي في نفس اليوم."'>"Amazing quality and super fast delivery! Got my order the same day."</p><div class="review-author">Fatima Al-Rashidi</div><div class="review-loc">Kuwait City</div></div>
-          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"The gold bracelet is even more beautiful in person. Great packaging!"' data-ar='"السوار الذهبي أجمل بكثير على الطبيعة. تغليف رائع!"'>"The gold bracelet is even more beautiful in person. Great packaging!"</p><div class="review-author">Mohammed Al-Sabah</div><div class="review-loc">Salmiya</div></div>
-          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"Best online store in Kuwait! Great prices and authentic products."' data-ar='"أفضل متجر إلكتروني في الكويت! أسعار رائعة ومنتجات أصلية."'>"Best online store in Kuwait! Great prices and authentic products."</p><div class="review-author">Nour Hassan</div><div class="review-loc">Hawalli</div></div>
+          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"Got my PS5 same day! Incredible service and great price. Best tech store in Kuwait."' data-ar='"وصل PS5 في نفس اليوم! خدمة رائعة وسعر ممتاز. أفضل متجر تقنية في الكويت."'>"Got my PS5 same day! Incredible service and great price. Best tech store in Kuwait."</p><div class="review-author">Khalid Al-Mutairi</div><div class="review-loc">Kuwait City</div></div>
+          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"My new iPhone 15 Pro arrived perfectly packed. Official warranty, amazing deal!"' data-ar='"وصل آيفون 15 برو بتغليف ممتاز. ضمان رسمي وسعر رائع!"'>"My new iPhone 15 Pro arrived perfectly packed. Official warranty, amazing deal!"</p><div class="review-author">Sara Al-Rashidi</div><div class="review-loc">Salmiya</div></div>
+          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"The LG OLED TV picture quality is insane. Fast delivery and great customer service!"' data-ar='"جودة صورة تلفاز LG OLED خيالية. توصيل سريع وخدمة عملاء ممتازة!"'>"The LG OLED TV picture quality is insane. Fast delivery and great customer service!"</p><div class="review-author">Mohammed Al-Sabah</div><div class="review-loc">Hawalli</div></div>
         </div>
       </div>
     </div>

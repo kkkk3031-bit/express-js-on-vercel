@@ -65,79 +65,103 @@ function requireAdmin(req: express.Request, res: express.Response, next: express
 }
 
 // ── TEMPLATES ──
-const topbarHTML = `<div class="topbar">🚚 <span data-en="Free delivery across Kuwait on orders over 10 KD" data-ar="توصيل مجاني في الكويت للطلبات فوق 10 دينار">Free delivery across Kuwait on orders over 10 KD</span> &nbsp;|&nbsp; 📞 +965 5555 5555</div>`
+const topbarHTML = `<div class="topbar">🚚 <span data-en="Free delivery across Kuwait on orders over 10 KD" data-ar="توصيل مجاني في الكويت للطلبات فوق 10 دينار">توصيل مجاني في الكويت للطلبات فوق 10 دينار</span> &nbsp;|&nbsp; 📞 +965 5555 5555</div>`
 
 const navHTML = `
-<nav>
-  <a class="logo" href="/">Kuwait<span>Store</span></a>
-  <button class="hamburger" onclick="this.parentNode.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-  <div class="nav-links">
-    <a href="/" data-en="Home" data-ar="الرئيسية">Home</a>
-    <a href="/products" data-en="Products" data-ar="المنتجات">Products</a>
-    <a href="/about" data-en="About" data-ar="عن المتجر">About</a>
-    <a href="/contact" data-en="Contact" data-ar="اتصل بنا">Contact</a>
-    <a href="/login" id="nav-login" data-en="Login" data-ar="دخول">Login</a>
-    <a href="/register" id="nav-register" data-en="Register" data-ar="تسجيل">Register</a>
-    <a href="/account" id="nav-user" style="display:none">👤 <span class="nav-username"></span></a>
-    <button id="nav-logout" class="nav-btn" onclick="logout()" style="display:none" data-en="Logout" data-ar="خروج">Logout</button>
-    <a href="/cart" class="nav-cart">🛒 <span data-en="Cart" data-ar="السلة">Cart</span> <span class="cart-count" id="cart-count">0</span></a>
-    <button id="theme-btn" class="icon-btn" onclick="toggleTheme()" title="Dark/Light">🌙</button>
-    <button id="lang-btn" class="icon-btn lang-btn" onclick="toggleLang()">عربي</button>
+<nav class="top-nav">
+  <div class="nav-inner">
+    <a class="logo" href="/">Kuwait<span>Store</span></a>
+    <div class="nav-links-desktop">
+      <a class="nav-link" href="/" data-en="Home" data-ar="الرئيسية">الرئيسية</a>
+      <a class="nav-link" href="/products" data-en="Products" data-ar="المنتجات">المنتجات</a>
+      <a class="nav-link" href="/about" data-en="About" data-ar="عن المتجر">عن المتجر</a>
+      <a class="nav-link" href="/contact" data-en="Contact" data-ar="اتصل بنا">اتصل بنا</a>
+      <a class="nav-link" id="nav-login" href="/login" data-en="Login" data-ar="دخول">دخول</a>
+      <a class="nav-link" id="nav-register" href="/register" data-en="Register" data-ar="تسجيل">تسجيل</a>
+      <a class="nav-link" id="nav-user" href="/account" style="display:none">👤 <span class="nav-username"></span></a>
+      <button class="nav-icon-btn" id="nav-logout" onclick="logout()" style="display:none;font-size:.78rem;width:auto;padding:0 .8rem" data-en="Logout" data-ar="خروج">خروج</button>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" id="theme-btn" onclick="toggleTheme()" title="Theme">🌙</button>
+      <button class="nav-icon-btn lang-nav-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+      <a href="/cart" class="cart-nav-btn">🛒 <span class="cart-count" id="cart-count">0</span></a>
+    </div>
   </div>
+</nav>
+
+<div class="slide-overlay" id="slide-overlay" onclick="closeMenu()"></div>
+<div class="slide-menu" id="slide-menu">
+  <button class="slide-close" onclick="closeMenu()">✕</button>
+  <a href="/"><span class="slide-icon">🏠</span><span data-en="Home" data-ar="الرئيسية">الرئيسية</span></a>
+  <a href="/products"><span class="slide-icon">🛍️</span><span data-en="Products" data-ar="المنتجات">المنتجات</span></a>
+  <a href="/cart"><span class="slide-icon">🛒</span><span data-en="Cart" data-ar="السلة">السلة</span></a>
+  <a href="/about"><span class="slide-icon">ℹ️</span><span data-en="About" data-ar="عن المتجر">عن المتجر</span></a>
+  <a href="/contact"><span class="slide-icon">📞</span><span data-en="Contact" data-ar="اتصل بنا">اتصل بنا</span></a>
+  <div class="slide-sep"></div>
+  <a href="/login" id="smenu-login"><span class="slide-icon">🔑</span><span data-en="Login" data-ar="دخول">دخول</span></a>
+  <a href="/register" id="smenu-register"><span class="slide-icon">✨</span><span data-en="Register" data-ar="تسجيل">تسجيل</span></a>
+  <a href="/account" id="smenu-account" style="display:none"><span class="slide-icon">👤</span><span data-en="My Account" data-ar="حسابي">حسابي</span></a>
+  <div class="slide-sep"></div>
+  <a href="#" onclick="toggleTheme();return false"><span class="slide-icon">🌙</span><span data-en="Dark / Light" data-ar="وضع ليلي / نهاري">وضع ليلي / نهاري</span></a>
+  <a href="#" onclick="toggleLang();closeMenu();return false"><span class="slide-icon">🌐</span><span data-en="العربية" data-ar="English">English</span></a>
+</div>
+
+<nav class="mobile-nav">
+  <a href="/" class="mnav-item"><span class="mnav-icon">🏠</span><span data-en="Home" data-ar="الرئيسية">الرئيسية</span></a>
+  <a href="/products" class="mnav-item"><span class="mnav-icon">🛍️</span><span data-en="Shop" data-ar="تسوق">تسوق</span></a>
+  <a href="/cart" class="mnav-item"><span class="mnav-wrap"><span class="mnav-icon">🛒</span><span class="mnav-badge" id="mnav-count" style="display:none">0</span></span><span data-en="Cart" data-ar="السلة">السلة</span></a>
+  <a href="/account" class="mnav-item"><span class="mnav-icon">👤</span><span data-en="Account" data-ar="حسابي">حسابي</span></a>
+  <button class="mnav-item" onclick="openMenu()"><span class="mnav-icon">☰</span><span data-en="Menu" data-ar="القائمة">القائمة</span></button>
 </nav>`
 
-const whatsappHTML = `<a href="https://wa.me/96555555555?text=Hello%20Kuwait%20Store!" class="whatsapp-btn" target="_blank" title="WhatsApp">💬</a>`
+const whatsappHTML = `<a href="https://wa.me/96555555555?text=مرحباً%20Kuwait%20Store!" class="whatsapp-btn" target="_blank" title="WhatsApp">💬</a>`
 
 const footerHTML = `
 <div class="newsletter">
-  <h2 data-en="Stay Updated" data-ar="ابق على اطلاع">Stay Updated</h2>
-  <p data-en="Subscribe for exclusive deals and new arrivals" data-ar="اشترك للحصول على عروض حصرية">Subscribe for exclusive deals and new arrivals</p>
-  <form class="newsletter-form" onsubmit="this.innerHTML='<p style=color:white>✅ Subscribed!</p>';return false;">
-    <input type="email" placeholder="Your email address" data-en-ph="Your email address" data-ar-ph="بريدك الإلكتروني" required/>
-    <button type="submit" data-en="Subscribe" data-ar="اشترك">Subscribe</button>
+  <h2 data-en="Stay Updated" data-ar="ابق على اطلاع">ابق على اطلاع</h2>
+  <p data-en="Subscribe for exclusive deals and new arrivals" data-ar="اشترك للحصول على عروض حصرية وأحدث المنتجات">اشترك للحصول على عروض حصرية وأحدث المنتجات</p>
+  <form class="nl-form" onsubmit="this.innerHTML='<p style=color:white;padding:.85rem>✅ تم الاشتراك!</p>';return false;">
+    <input type="email" placeholder="بريدك الإلكتروني" data-en-ph="Your email address" data-ar-ph="بريدك الإلكتروني" required/>
+    <button type="submit" data-en="Subscribe" data-ar="اشترك">اشترك</button>
   </form>
 </div>
 <footer>
   <div class="footer-grid">
     <div class="footer-col">
       <h4>Kuwait Store</h4>
-      <p data-en="Your trusted online shopping destination in Kuwait since 2020." data-ar="وجهتك التسوقية الموثوقة في الكويت منذ 2020.">Your trusted online shopping destination in Kuwait since 2020.</p>
+      <p data-en="Kuwait's #1 electronics store since 2020." data-ar="متجر الإلكترونيات الأول في الكويت منذ 2020.">متجر الإلكترونيات الأول في الكويت منذ 2020.</p>
       <div class="footer-social">
         <a class="social-icon" href="#" title="Instagram">📸</a>
-        <a class="social-icon" href="#" title="Twitter">🐦</a>
+        <a class="social-icon" href="#" title="Twitter">𝕏</a>
         <a class="social-icon" href="#" title="Snapchat">👻</a>
         <a class="social-icon" href="#" title="TikTok">🎵</a>
       </div>
     </div>
     <div class="footer-col">
-      <h4 data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h4>
-      <a href="/" data-en="Home" data-ar="الرئيسية">Home</a>
-      <a href="/products" data-en="All Products" data-ar="جميع المنتجات">All Products</a>
-      <a href="/about" data-en="About Us" data-ar="عن المتجر">About Us</a>
-      <a href="/contact" data-en="Contact" data-ar="اتصل بنا">Contact</a>
-      <a href="/cart" data-en="My Cart" data-ar="سلتي">My Cart</a>
+      <h4 data-en="Quick Links" data-ar="روابط سريعة">روابط سريعة</h4>
+      <a href="/" data-en="Home" data-ar="الرئيسية">الرئيسية</a>
+      <a href="/products" data-en="All Products" data-ar="جميع المنتجات">جميع المنتجات</a>
+      <a href="/about" data-en="About Us" data-ar="عن المتجر">عن المتجر</a>
+      <a href="/contact" data-en="Contact" data-ar="اتصل بنا">اتصل بنا</a>
     </div>
     <div class="footer-col">
-      <h4 data-en="Categories" data-ar="الفئات">Categories</h4>
-      <a href="/products?cat=Accessories" data-en="Accessories" data-ar="إكسسوارات">Accessories</a>
-      <a href="/products?cat=Fashion" data-en="Fashion" data-ar="أزياء">Fashion</a>
-      <a href="/products?cat=Beauty" data-en="Beauty" data-ar="جمال">Beauty</a>
-      <a href="/products?cat=Jewelry" data-en="Jewelry" data-ar="مجوهرات">Jewelry</a>
-      <a href="/products?cat=Home" data-en="Home" data-ar="منزل">Home</a>
-      <a href="/products?cat=Food" data-en="Food" data-ar="أغذية">Food</a>
+      <h4 data-en="Categories" data-ar="الفئات">الفئات</h4>
+      <a href="/products?cat=Phones" data-en="Phones" data-ar="هواتف">هواتف</a>
+      <a href="/products?cat=Gaming" data-en="Gaming" data-ar="ألعاب">ألعاب</a>
+      <a href="/products?cat=TVs" data-en="TVs" data-ar="تلفزيونات">تلفزيونات</a>
+      <a href="/products?cat=Laptops" data-en="Laptops" data-ar="لابتوب">لابتوب</a>
+      <a href="/products?cat=Audio" data-en="Audio" data-ar="صوتيات">صوتيات</a>
     </div>
     <div class="footer-col">
-      <h4 data-en="Customer Service" data-ar="خدمة العملاء">Customer Service</h4>
-      <a href="/contact" data-en="Contact Us" data-ar="اتصل بنا">Contact Us</a>
+      <h4 data-en="Customer Service" data-ar="خدمة العملاء">خدمة العملاء</h4>
+      <a href="/contact" data-en="Contact Us" data-ar="اتصل بنا">اتصل بنا</a>
       <a href="https://wa.me/96555555555" target="_blank">WhatsApp</a>
       <a href="mailto:info@kuwait-store.com">info@kuwait-store.com</a>
       <a href="tel:+96555555555">+965 5555 5555</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; ${new Date().getFullYear()} <span>Kuwait Store</span>. All rights reserved. &nbsp;|&nbsp; Made with ❤️ in Kuwait 🇰🇼</p>
+    <p>&copy; ${new Date().getFullYear()} <span>Kuwait Store</span>. جميع الحقوق محفوظة &nbsp;|&nbsp; 🇰🇼 صنع بكل ❤️ في الكويت</p>
   </div>
 </footer>`
 
@@ -145,20 +169,15 @@ const page = (title: string, breadcrumb: string, body: string, meta = '') => `<!
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0f172a"/>
   <meta name="description" content="${meta || 'Kuwait Store - متجر الإلكترونيات الأول في الكويت.'}"/>
-  <title>${title} | متجر الكويت</title>
+  <title>${title} | Kuwait Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/style.css"/>
-  <link rel="icon" href="/logo.png"/>
-  <script>
-    (function(){
-      var t = localStorage.getItem('theme') || 'light'
-      document.documentElement.dataset.theme = t
-      var l = localStorage.getItem('lang') || 'ar'
-      document.documentElement.lang = l
-      document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr'
-    })()
-  </script>
+  <script>(function(){var t=localStorage.getItem('theme')||'light';document.documentElement.dataset.theme=t;var l=localStorage.getItem('lang')||'ar';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr'})()</script>
 </head>
 <body>
   ${topbarHTML}
@@ -166,7 +185,7 @@ const page = (title: string, breadcrumb: string, body: string, meta = '') => `<!
   ${breadcrumb ? `<div class="breadcrumb"><a href="/" data-en="Home" data-ar="الرئيسية">الرئيسية</a> › ${breadcrumb}</div>` : ''}
   ${body}
   ${whatsappHTML}
-  <button class="lang-float-btn" id="lang-float-btn" onclick="toggleLang()" title="تغيير اللغة / Change Language">EN</button>
+  <button class="lang-float-btn" id="lang-float-btn" onclick="toggleLang()">EN</button>
   <div class="toast" id="toast"></div>
   ${footerHTML}
   <script src="/app.js"></script>
@@ -174,19 +193,19 @@ const page = (title: string, breadcrumb: string, body: string, meta = '') => `<!
 </html>`
 
 const productCard = (p: Product) => `
-<div class="product-card">
-  <div class="product-img" onclick="location.href='/products/${p.id}'">
-    ${p.badge ? `<div class="product-badge" style="background:${badgeColors[p.badge]}"><span data-en="${p.badge.toUpperCase()}" data-ar="${badgeAr[p.badge]}">${p.badge.toUpperCase()}</span></div>` : ''}
-    <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentNode.querySelector('.emoji-fb').style.display='block'"/>
-    <span class="emoji-fb" style="display:none;font-size:4rem">${p.emoji}</span>
+<div class="product-card" onclick="location.href='/products/${p.id}'">
+  <div class="p-img">
+    ${p.badge ? `<div class="p-badge" style="background:${badgeColors[p.badge]}"><span data-en="${p.badge.toUpperCase()}" data-ar="${badgeAr[p.badge]}">${badgeAr[p.badge]}</span></div>` : ''}
+    <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.outerHTML='<div style=font-size:3.5rem;display:flex;align-items:center;justify-content:center;height:100%;background:var(--img-bg)>${p.emoji}</div>'"/>
+    <button class="p-wish" onclick="event.stopPropagation()" title="Wishlist">🤍</button>
   </div>
-  <div class="product-info">
-    <div class="product-tag" data-en="${p.category}" data-ar="${p.categoryAr}">${p.category}</div>
-    <h3 onclick="location.href='/products/${p.id}'" data-en="${p.name}" data-ar="${p.nameAr}">${p.name}</h3>
-    <p data-en="${p.desc.slice(0,80)}..." data-ar="${p.descAr.slice(0,80)}...">${p.desc.slice(0,80)}...</p>
-    <div class="product-footer">
-      <span class="price">${p.price.toFixed(3)} KD</span>
-      <button class="add-cart" onclick="addToCart('${p.name}',${p.price},1,'${p.nameAr}')"><span data-en="+ Cart" data-ar="+ السلة">+ Cart</span></button>
+  <div class="p-body">
+    <div class="p-cat" data-en="${p.category}" data-ar="${p.categoryAr}">${p.categoryAr}</div>
+    <div class="p-name" data-en="${p.name}" data-ar="${p.nameAr}">${p.nameAr}</div>
+    <div class="p-desc" data-en="${p.desc.slice(0,75)}..." data-ar="${p.descAr.slice(0,75)}...">${p.descAr.slice(0,75)}...</div>
+    <div class="p-foot">
+      <div class="p-price">${p.price.toFixed(3)} KD</div>
+      <button class="p-add" onclick="event.stopPropagation();addToCart('${p.name}',${p.price},1,'${p.nameAr}')"><span data-en="+ Cart" data-ar="+ السلة">+ السلة</span></button>
     </div>
   </div>
 </div>`
@@ -205,83 +224,89 @@ app.get('/', (_req, res) => {
     { icon: '⚡', name: 'All',      nameAr: 'الكل',      cat: '' },
   ]
   const catCards = cats.map(c => `
-    <a class="cat-card" href="/products${c.cat ? '?cat='+c.cat : ''}">
-      <span class="cat-card-icon">${c.icon}</span>
-      <div class="cat-card-name" data-en="${c.name}" data-ar="${c.nameAr}">${c.name}</div>
+    <a class="cat-pill" href="/products${c.cat ? '?cat='+c.cat : ''}">
+      <span class="cat-pill-icon">${c.icon}</span>
+      <span class="cat-pill-name" data-en="${c.name}" data-ar="${c.nameAr}">${c.nameAr}</span>
     </a>`).join('')
 
-  res.type('html').send(page('Home', '', `
+  res.type('html').send(page('الرئيسية', '', `
     <div class="hero">
-      <div class="hero-bg-grid"></div>
-      <div class="hero-glow-1"></div>
-      <div class="hero-glow-2"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-glow hero-glow-1"></div>
+      <div class="hero-glow hero-glow-2"></div>
       <div class="hero-content">
-        <div class="hero-badge">⚡ <span data-en="NEW ARRIVALS 2025" data-ar="وصل حديثاً 2025">NEW ARRIVALS 2025</span></div>
+        <div class="hero-badge">⚡ <span data-en="NEW ARRIVALS 2025" data-ar="وصل حديثاً 2025">وصل حديثاً 2025</span></div>
         <h1>
-          <span data-en="Shop the Latest" data-ar="تسوق أحدث">Shop the Latest</span>
-          <span class="line2 gradient-text" data-en="Technology" data-ar="التكنولوجيا">Technology</span>
+          <span data-en="Shop the Latest" data-ar="تسوق أحدث">تسوق أحدث</span>
+          <span class="line2 gradient-text" data-en="Technology" data-ar="التكنولوجيا">التكنولوجيا</span>
         </h1>
-        <p data-en="Kuwait's #1 electronics store — phones, gaming, TVs, laptops and more. Same-day delivery." data-ar="متجر الإلكترونيات الأول في الكويت — هواتف، ألعاب، تلفزيونات، لابتوب والمزيد. توصيل في نفس اليوم.">Kuwait's #1 electronics store — phones, gaming, TVs, laptops and more. Same-day delivery.</p>
+        <p data-en="Kuwait's #1 electronics store — phones, gaming, TVs, laptops and more. Same-day delivery." data-ar="متجر الإلكترونيات الأول في الكويت — هواتف، ألعاب، تلفزيونات، لابتوب والمزيد. توصيل في نفس اليوم.">متجر الإلكترونيات الأول في الكويت — هواتف، ألعاب، تلفزيونات، لابتوب والمزيد. توصيل في نفس اليوم.</p>
         <div class="hero-btns">
-          <a href="/products" class="btn btn-primary" data-en="🛍️ Shop Now" data-ar="🛍️ تسوق الآن">🛍️ Shop Now</a>
-          <a href="/products?cat=Gaming" class="btn btn-outline" data-en="🎮 Gaming Deals" data-ar="🎮 عروض الألعاب">🎮 Gaming Deals</a>
+          <a href="/products" class="btn btn-primary" data-en="🛍️ Shop Now" data-ar="🛍️ تسوق الآن">🛍️ تسوق الآن</a>
+          <a href="/products?cat=Gaming" class="btn btn-outline" data-en="🎮 Gaming Deals" data-ar="🎮 عروض الألعاب">🎮 عروض الألعاب</a>
         </div>
         <div class="hero-stats">
-          <div class="hero-stat"><div class="num">500+</div><div class="lbl" data-en="Products" data-ar="منتج">Products</div></div>
-          <div class="hero-stat"><div class="num">50K+</div><div class="lbl" data-en="Customers" data-ar="عميل">Customers</div></div>
-          <div class="hero-stat"><div class="num">4.9★</div><div class="lbl" data-en="Rating" data-ar="تقييم">Rating</div></div>
-          <div class="hero-stat"><div class="num" data-en="Same Day" data-ar="نفس اليوم">Same Day</div><div class="lbl" data-en="Delivery" data-ar="توصيل">Delivery</div></div>
+          <div class="hero-stat"><div class="num">500+</div><div class="lbl" data-en="Products" data-ar="منتج">منتج</div></div>
+          <div class="hero-stat"><div class="num">50K+</div><div class="lbl" data-en="Customers" data-ar="عميل">عميل</div></div>
+          <div class="hero-stat"><div class="num">4.9★</div><div class="lbl" data-en="Rating" data-ar="تقييم">تقييم</div></div>
+          <div class="hero-stat"><div class="num" data-en="Same Day" data-ar="نفس اليوم">نفس اليوم</div><div class="lbl" data-en="Delivery" data-ar="توصيل">توصيل</div></div>
         </div>
       </div>
     </div>
 
-    <div class="search-bar">
-      <form action="/products" method="GET" style="display:flex;width:100%;max-width:580px">
-        <input type="text" name="q" data-en-ph="Search phones, TVs, gaming..." data-ar-ph="ابحث عن هواتف، تلفزيونات، ألعاب..." placeholder="Search phones, TVs, gaming..."/>
+    <div class="search-wrap">
+      <form class="search-form" action="/products" method="GET">
+        <input type="text" name="q" data-en-ph="Search phones, TVs, gaming..." data-ar-ph="ابحث عن هواتف، تلفزيونات، ألعاب..." placeholder="ابحث عن هواتف، تلفزيونات، ألعاب..."/>
         <button type="submit">🔍</button>
       </form>
     </div>
 
-    <div class="categories-section">
-      <h2 data-en="Shop by Category" data-ar="تسوق حسب الفئة">Shop by Category</h2>
-      <div class="cat-cards-grid">${catCards}</div>
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title" data-en="Shop by Category" data-ar="تسوق حسب الفئة">تسوق حسب الفئة</div>
+        <a href="/products" class="see-all" data-en="View All →" data-ar="عرض الكل →">عرض الكل →</a>
+      </div>
+      <div class="cats-scroll">${catCards}</div>
     </div>
 
     <div class="promo-banner">
-      <div class="promo-content">
-        <div class="promo-badge" data-en="LIMITED TIME" data-ar="عرض محدود">LIMITED TIME</div>
-        <h3 data-en="Gaming Week — Up to 30% OFF" data-ar="أسبوع الألعاب — خصم يصل إلى 30٪">Gaming Week — Up to 30% OFF</h3>
-        <p data-en="PS5, Xbox Series X, RTX 4080 and more. Don't miss out!" data-ar="PS5، Xbox Series X، RTX 4080 والمزيد. لا تفوت الفرصة!">PS5, Xbox Series X, RTX 4080 and more. Don't miss out!</p>
-        <a href="/products?cat=Gaming" class="btn btn-primary" style="margin-top:1.2rem;display:inline-block" data-en="Shop Gaming →" data-ar="تسوق الألعاب →">Shop Gaming →</a>
+      <div class="promo-inner">
+        <div class="promo-tag" data-en="LIMITED TIME" data-ar="عرض محدود">عرض محدود</div>
+        <div class="promo-title" data-en="Gaming Week — Up to 30% OFF" data-ar="أسبوع الألعاب — خصم يصل إلى 30٪">أسبوع الألعاب — خصم يصل إلى 30٪</div>
+        <div class="promo-sub" data-en="PS5, Xbox Series X, RTX 4080 and more" data-ar="PS5، Xbox Series X، RTX 4080 والمزيد">PS5، Xbox Series X، RTX 4080 والمزيد</div>
+        <a href="/products?cat=Gaming" class="btn btn-primary" style="margin-top:1rem" data-en="Shop Gaming →" data-ar="تسوق الألعاب →">تسوق الألعاب →</a>
       </div>
       <div class="promo-emoji">🎮</div>
     </div>
 
-    <div class="features">
-      <div class="features-grid">
-        <div class="feature-item"><div class="feature-icon">🚀</div><h3 data-en="Same-Day Delivery" data-ar="توصيل في نفس اليوم">Same-Day Delivery</h3><p data-en="Order before 2PM, get it today" data-ar="اطلب قبل 2 ظهراً واستلمه اليوم">Order before 2PM, get it today</p></div>
-        <div class="feature-item"><div class="feature-icon">🔒</div><h3 data-en="Secure Payment" data-ar="دفع آمن">Secure Payment</h3><p data-en="KNET, Visa, Mastercard & Cash" data-ar="كي نت، فيزا، ماستركارد ونقداً">KNET, Visa, Mastercard & Cash</p></div>
-        <div class="feature-item"><div class="feature-icon">✅</div><h3 data-en="Official Warranty" data-ar="ضمان رسمي">Official Warranty</h3><p data-en="All products have official warranty" data-ar="جميع المنتجات بضمان رسمي">All products have official warranty</p></div>
-        <div class="feature-item"><div class="feature-icon">💬</div><h3 data-en="24/7 Support" data-ar="دعم 24/7">24/7 Support</h3><p data-en="WhatsApp & phone support" data-ar="دعم واتساب وهاتف">WhatsApp & phone support</p></div>
+    <div class="features-row">
+      <div class="feature-card"><div class="feature-icon">🚀</div><h3 data-en="Same-Day Delivery" data-ar="توصيل في نفس اليوم">توصيل في نفس اليوم</h3><p data-en="Order before 2PM, get it today" data-ar="اطلب قبل 2 ظهراً واستلمه اليوم">اطلب قبل 2 ظهراً واستلمه اليوم</p></div>
+      <div class="feature-card"><div class="feature-icon">🔒</div><h3 data-en="Secure Payment" data-ar="دفع آمن">دفع آمن</h3><p data-en="KNET, Visa, Apple Pay & Cash" data-ar="كي نت، فيزا، Apple Pay ونقداً">كي نت، فيزا، Apple Pay ونقداً</p></div>
+      <div class="feature-card"><div class="feature-icon">✅</div><h3 data-en="Official Warranty" data-ar="ضمان رسمي">ضمان رسمي</h3><p data-en="All products have official warranty" data-ar="جميع المنتجات بضمان رسمي">جميع المنتجات بضمان رسمي</p></div>
+      <div class="feature-card"><div class="feature-icon">💬</div><h3 data-en="24/7 Support" data-ar="دعم 24/7">دعم 24/7</h3><p data-en="WhatsApp & phone support" data-ar="دعم واتساب وهاتف">دعم واتساب وهاتف</p></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title">🔥 <span data-en="Hot Deals" data-ar="أقوى العروض">أقوى العروض</span></div>
+        <a href="/products" class="see-all" data-en="View All →" data-ar="عرض الكل →">عرض الكل →</a>
+      </div>
+      <div class="products-grid">${featured.map(productCard).join('')}</div>
+      <div style="text-align:center;margin-top:2rem">
+        <a href="/products" class="btn btn-primary" data-en="View All Products →" data-ar="عرض جميع المنتجات →">عرض جميع المنتجات →</a>
       </div>
     </div>
 
-    <section>
-      <h2 class="section-title">🔥 <span data-en="Hot Deals" data-ar="أقوى العروض">Hot Deals</span></h2>
-      <div class="products-grid">${featured.map(productCard).join('')}</div>
-      <div style="text-align:center;margin-top:2.5rem">
-        <a href="/products" class="btn btn-primary" data-en="View All Products →" data-ar="عرض جميع المنتجات →">View All Products →</a>
+    <div class="section" style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding:2.5rem 1rem">
+      <div style="max-width:1200px;margin:0 auto">
+      <div class="section-head">
+        <div class="section-title" data-en="What Customers Say" data-ar="ماذا يقول عملاؤنا">ماذا يقول عملاؤنا</div>
       </div>
-    </section>
-
-    <div class="testimonials">
-      <div class="testimonials-inner">
-        <h2 data-en="What Customers Say" data-ar="ماذا يقول عملاؤنا">What Customers Say</h2>
-        <div class="reviews-grid">
-          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"Got my PS5 same day! Incredible service and great price. Best tech store in Kuwait."' data-ar='"وصل PS5 في نفس اليوم! خدمة رائعة وسعر ممتاز. أفضل متجر تقنية في الكويت."'>"Got my PS5 same day! Incredible service and great price. Best tech store in Kuwait."</p><div class="review-author">Khalid Al-Mutairi</div><div class="review-loc">Kuwait City</div></div>
-          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"My new iPhone 15 Pro arrived perfectly packed. Official warranty, amazing deal!"' data-ar='"وصل آيفون 15 برو بتغليف ممتاز. ضمان رسمي وسعر رائع!"'>"My new iPhone 15 Pro arrived perfectly packed. Official warranty, amazing deal!"</p><div class="review-author">Sara Al-Rashidi</div><div class="review-loc">Salmiya</div></div>
-          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"The LG OLED TV picture quality is insane. Fast delivery and great customer service!"' data-ar='"جودة صورة تلفاز LG OLED خيالية. توصيل سريع وخدمة عملاء ممتازة!"'>"The LG OLED TV picture quality is insane. Fast delivery and great customer service!"</p><div class="review-author">Mohammed Al-Sabah</div><div class="review-loc">Hawalli</div></div>
-        </div>
+      <div class="reviews-grid">
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"Got my PS5 same day! Best tech store in Kuwait."' data-ar='"وصل PS5 في نفس اليوم! أفضل متجر تقنية في الكويت."'>"وصل PS5 في نفس اليوم! أفضل متجر تقنية في الكويت."</p><div class="review-author">خالد المطيري</div><div class="review-loc">الكويت</div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"iPhone 15 Pro arrived perfectly packed. Official warranty!"' data-ar='"وصل آيفون 15 برو بتغليف ممتاز. ضمان رسمي!"'>"وصل آيفون 15 برو بتغليف ممتاز. ضمان رسمي وسعر رائع!"</p><div class="review-author">سارة الراشدي</div><div class="review-loc">السالمية</div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-en='"LG OLED TV picture quality is insane. Fast delivery!"' data-ar='"جودة صورة تلفاز LG OLED خيالية. توصيل سريع!"'>"جودة صورة تلفاز LG OLED خيالية. توصيل سريع وخدمة ممتازة!"</p><div class="review-author">محمد الصباح</div><div class="review-loc">حولي</div></div>
+      </div>
       </div>
     </div>
   `))
@@ -301,35 +326,36 @@ app.get('/products', (req, res) => {
   if (sort === 'desc') filtered = [...filtered].sort((a, b) => b.price - a.price)
   if (sort === 'name') filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name))
 
+  const catArMap: Record<string,string> = { All:'الكل', Phones:'هواتف', Gaming:'ألعاب', TVs:'تلفزيونات', Laptops:'لابتوب', Audio:'صوتيات', Tablets:'لوحيات', Wearables:'إكسسوارات' }
   const catBtns = ['All', ...categories].map(c =>
-    `<button class="cat-btn ${cat === c || (c === 'All' && !cat) ? 'active' : ''}" onclick="location.href='/products${c === 'All' ? '' : '?cat=' + c}'">${c}</button>`
+    `<button class="filter-btn ${cat === c || (c === 'All' && !cat) ? 'active' : ''}" onclick="location.href='/products${c === 'All' ? '' : '?cat=' + c}'" data-en="${c}" data-ar="${catArMap[c]||c}">${catArMap[c]||c}</button>`
   ).join('')
 
   const cards = filtered.length
     ? filtered.map(productCard).join('')
-    : '<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:3rem">No products found. <a href="/products" style="color:var(--primary)">Clear search</a></p>'
+    : '<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:3rem" data-en="No products found." data-ar="لا توجد منتجات.">لا توجد منتجات. <a href="/products" style="color:var(--primary)">مسح البحث</a></p>'
 
-  res.type('html').send(page('Products', 'Products', `
-    <section>
-      <h2 class="section-title"><span data-en="All Products" data-ar="جميع المنتجات">All Products</span> ${query ? `— "${query}"` : ''} <span style="font-size:1rem;font-weight:400;color:var(--muted)">(${filtered.length})</span></h2>
-      <div class="search-bar" style="padding:0 0 1.5rem;background:none;box-shadow:none;justify-content:flex-start">
-        <form action="/products" method="GET" style="display:flex;width:100%;max-width:500px">
-          ${cat ? `<input type="hidden" name="cat" value="${cat}"/>` : ''}
-          <input type="text" name="q" data-en-ph="Search products..." data-ar-ph="ابحث عن منتجات..." placeholder="Search products..." value="${query}"/>
-          <button type="submit">🔍</button>
-        </form>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1rem">
-        <div class="categories">${catBtns}</div>
-        <select onchange="location.href='/products?${cat ? 'cat=' + cat + '&' : ''}${query ? 'q=' + query + '&' : ''}sort='+this.value" style="padding:0.4rem 0.8rem;border:2px solid var(--border);border-radius:6px;font-size:0.88rem;background:var(--card);color:var(--text)">
-          <option value="" ${!sort ? 'selected' : ''}>Sort: Default</option>
-          <option value="asc" ${sort==='asc'?'selected':''}>Price: Low → High</option>
-          <option value="desc" ${sort==='desc'?'selected':''}>Price: High → Low</option>
-          <option value="name" ${sort==='name'?'selected':''}>Name A–Z</option>
+  res.type('html').send(page('المنتجات', 'المنتجات', `
+    <div class="search-wrap">
+      <form class="search-form" action="/products" method="GET">
+        ${cat ? `<input type="hidden" name="cat" value="${cat}"/>` : ''}
+        <input type="text" name="q" data-en-ph="Search products..." data-ar-ph="ابحث عن منتجات..." placeholder="ابحث عن منتجات..." value="${query}"/>
+        <button type="submit">🔍</button>
+      </form>
+    </div>
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title"><span data-en="All Products" data-ar="جميع المنتجات">جميع المنتجات</span> <span style="font-size:.9rem;font-weight:400;color:var(--muted)">(${filtered.length})</span></div>
+        <select class="f-input" style="width:auto;margin:0;padding:.42rem .8rem;font-size:.82rem" onchange="location.href='/products?${cat ? 'cat='+cat+'&' : ''}${query ? 'q='+query+'&' : ''}sort='+this.value">
+          <option value="" ${!sort?'selected':''}>ترتيب افتراضي</option>
+          <option value="asc" ${sort==='asc'?'selected':''}>السعر: الأقل أولاً</option>
+          <option value="desc" ${sort==='desc'?'selected':''}>السعر: الأعلى أولاً</option>
+          <option value="name" ${sort==='name'?'selected':''}>الاسم أ–ي</option>
         </select>
       </div>
+      <div class="filter-bar">${catBtns}</div>
       <div class="products-grid">${cards}</div>
-    </section>
+    </div>
   `))
 })
 
@@ -343,41 +369,41 @@ app.get('/products/:id', (req, res) => {
     `<div class="spec-row"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`
   ).join('')
 
-  res.type('html').send(page(product.name, `<a href="/products" data-en="Products" data-ar="المنتجات">Products</a> › <span data-en="${product.name}" data-ar="${product.nameAr}">${product.name}</span>`, `
-    <section>
-      <div class="product-detail">
-        <div class="product-detail-img">
-          <img src="${product.img}" alt="${product.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-          <span style="display:none;font-size:6rem">${product.emoji}</span>
+  res.type('html').send(page(product.nameAr, `<a href="/products" data-en="Products" data-ar="المنتجات">المنتجات</a> › <span data-en="${product.name}" data-ar="${product.nameAr}">${product.nameAr}</span>`, `
+    <div class="detail-wrap">
+      <div class="detail-img">
+        <img src="${product.img}" alt="${product.name}" onerror="this.outerHTML='<div style=font-size:7rem;display:flex;align-items:center;justify-content:center;height:100%>${product.emoji}</div>'"/>
+      </div>
+      <div class="detail-info">
+        <div class="p-cat" data-en="${product.category}" data-ar="${product.categoryAr}">${product.categoryAr}</div>
+        <h1 data-en="${product.name}" data-ar="${product.nameAr}">${product.nameAr}</h1>
+        <div class="review-stars">★★★★★ <span style="color:var(--muted);font-size:.85rem">(48 تقييم)</span></div>
+        <div class="detail-price">${product.price.toFixed(3)} KD</div>
+        <p class="detail-desc" data-en="${product.desc}" data-ar="${product.descAr}">${product.descAr}</p>
+        <div class="qty-row">
+          <button class="qty-lg" onclick="const q=document.getElementById('qty');if(+q.textContent>1)q.textContent=+q.textContent-1">−</button>
+          <span class="qty-num" id="qty">1</span>
+          <button class="qty-lg" onclick="const q=document.getElementById('qty');q.textContent=+q.textContent+1">+</button>
+          <span style="color:var(--muted);font-size:.85rem" data-en="pieces" data-ar="قطعة">قطعة</span>
         </div>
-        <div class="product-detail-info">
-          <div class="product-tag" data-en="${product.category}" data-ar="${product.categoryAr}">${product.category}</div>
-          <h1 data-en="${product.name}" data-ar="${product.nameAr}">${product.name}</h1>
-          <div class="review-stars" style="font-size:1.1rem">★★★★★ <span style="color:var(--muted);font-size:0.9rem">(48 reviews)</span></div>
-          <span class="price">${product.price.toFixed(3)} KD</span>
-          <p data-en="${product.desc}" data-ar="${product.descAr}">${product.desc}</p>
-          <div class="qty-control">
-            <button onclick="if(parseInt(document.getElementById('qty').textContent)>1)document.getElementById('qty').textContent=parseInt(document.getElementById('qty').textContent)-1">−</button>
-            <span id="qty">1</span>
-            <button onclick="document.getElementById('qty').textContent=parseInt(document.getElementById('qty').textContent)+1">+</button>
-          </div>
-          <div class="detail-actions">
-            <button class="btn btn-primary" onclick="addToCart('${product.name}',${product.price},parseInt(document.getElementById('qty').textContent))">🛒 <span data-en="Add to Cart" data-ar="أضف للسلة">Add to Cart</span></button>
-            <a href="/checkout" class="btn btn-dark" data-en="Buy Now" data-ar="اشتر الآن">Buy Now</a>
-            <a href="https://wa.me/96555555555?text=Hi!%20I'm%20interested%20in%20${encodeURIComponent(product.name)}" class="btn btn-outline" style="background:#25d366;border-color:#25d366;color:white" target="_blank">💬 WhatsApp</a>
-          </div>
-          <div class="product-specs">
-            <h3 data-en="Specifications" data-ar="المواصفات">Specifications</h3>
-            ${specRows}
-          </div>
+        <div class="detail-actions">
+          <button class="btn btn-primary" onclick="addToCart('${product.name}',${product.price},+document.getElementById('qty').textContent,'${product.nameAr}')">🛒 <span data-en="Add to Cart" data-ar="أضف للسلة">أضف للسلة</span></button>
+          <a href="/checkout" class="btn btn-dark" data-en="Buy Now" data-ar="اشتر الآن">اشتر الآن</a>
+          <a href="https://wa.me/96555555555?text=مرحباً!%20أريد%20${encodeURIComponent(product.nameAr)}" class="btn" style="background:#25d366;color:white;border:none" target="_blank">💬 واتساب</a>
+        </div>
+        <div>
+          <h3 style="font-weight:800;margin-bottom:.75rem" data-en="Specifications" data-ar="المواصفات">المواصفات</h3>
+          <div class="spec-table">${specRows}</div>
         </div>
       </div>
-      ${related.length ? `
-        <h2 class="section-title" style="margin-top:3rem" data-en="Related Products" data-ar="منتجات مشابهة">Related Products</h2>
+    </div>
+    ${related.length ? `
+      <div class="section" style="padding-top:0">
+        <div class="section-head"><div class="section-title" data-en="Related Products" data-ar="منتجات مشابهة">منتجات مشابهة</div></div>
         <div class="products-grid">${related.map(productCard).join('')}</div>
-      ` : ''}
-    </section>
-  `, product.desc))
+      </div>
+    ` : ''}
+  `, product.descAr))
 })
 
 // ── CART ──
@@ -429,86 +455,74 @@ app.get('/cart', (_req, res) => {
 
 // ── CHECKOUT ──
 app.get('/checkout', (_req, res) => {
-  res.type('html').send(page('Checkout', 'Checkout', `
-    <section>
-      <h2 class="section-title" data-en="Checkout" data-ar="إتمام الشراء">Checkout</h2>
-      <div class="checkout-grid">
-        <div>
-          <form class="checkout-form" id="order-form" onsubmit="submitOrder(event)">
-            <h3>📍 <span data-en="Delivery Information" data-ar="معلومات التوصيل">Delivery Information</span></h3>
-            <label data-en="Full Name" data-ar="الاسم الكامل">Full Name</label>
-            <input type="text" id="c-name" data-en-ph="Your full name" data-ar-ph="اسمك الكامل" placeholder="Your full name" required/>
-            <label data-en="Phone Number" data-ar="رقم الهاتف">Phone Number</label>
-            <input type="tel" id="c-phone" placeholder="+965 XXXX XXXX" required/>
-            <label data-en="Email (optional)" data-ar="البريد الإلكتروني (اختياري)">Email (optional)</label>
-            <input type="email" id="c-email" placeholder="email@example.com"/>
-            <div class="form-row">
-              <div>
-                <label data-en="Area" data-ar="المنطقة">Area</label>
-                <select id="c-area">
-                  <option>Kuwait City</option><option>Salmiya</option><option>Hawalli</option>
-                  <option>Farwaniya</option><option>Ahmadi</option><option>Jahra</option>
-                  <option>Mubarak Al-Kabeer</option>
-                </select>
-              </div>
-              <div>
-                <label data-en="Block" data-ar="القطعة">Block</label>
-                <input type="text" id="c-block" data-en-ph="Block number" data-ar-ph="رقم القطعة" placeholder="Block number"/>
-              </div>
+  res.type('html').send(page('إتمام الشراء', 'إتمام الشراء', `
+    <div class="checkout-layout">
+      <div>
+        <form class="checkout-card" id="order-form" onsubmit="submitOrder(event)">
+          <h3>📍 <span data-en="Delivery Information" data-ar="معلومات التوصيل">معلومات التوصيل</span></h3>
+          <label class="f-label" data-en="Full Name" data-ar="الاسم الكامل">الاسم الكامل</label>
+          <input class="f-input" type="text" id="c-name" data-en-ph="Your full name" data-ar-ph="اسمك الكامل" placeholder="اسمك الكامل" required/>
+          <label class="f-label" data-en="Phone" data-ar="رقم الهاتف">رقم الهاتف</label>
+          <input class="f-input" type="tel" id="c-phone" placeholder="+965 XXXX XXXX" required/>
+          <label class="f-label" data-en="Email (optional)" data-ar="البريد الإلكتروني (اختياري)">البريد الإلكتروني</label>
+          <input class="f-input" type="email" id="c-email" placeholder="email@example.com"/>
+          <div class="f-row">
+            <div>
+              <label class="f-label" data-en="Area" data-ar="المنطقة">المنطقة</label>
+              <select class="f-input" id="c-area">
+                <option>الكويت العاصمة</option><option>السالمية</option><option>حولي</option>
+                <option>الفروانية</option><option>الأحمدي</option><option>الجهراء</option>
+                <option>مبارك الكبير</option>
+              </select>
             </div>
-            <label data-en="Street & Building" data-ar="الشارع والمبنى">Street & Building</label>
-            <input type="text" id="c-address" data-en-ph="Street name, building, apartment" data-ar-ph="اسم الشارع، المبنى، الشقة" placeholder="Street name, building, apartment" required/>
-            <h3 style="margin-top:1rem">💳 <span data-en="Payment Method" data-ar="طريقة الدفع">Payment Method</span></h3>
-            <div class="payment-methods">
-              <div class="pay-method selected" onclick="selectPay(this)">💳 KNET</div>
-              <div class="pay-method" onclick="selectPay(this)">💳 Visa/MC</div>
-              <div class="pay-method" onclick="selectPay(this)" data-en="💵 Cash on Delivery" data-ar="💵 الدفع عند الاستلام">💵 Cash on Delivery</div>
+            <div>
+              <label class="f-label" data-en="Block" data-ar="القطعة">القطعة</label>
+              <input class="f-input" type="text" id="c-block" data-en-ph="Block number" data-ar-ph="رقم القطعة" placeholder="رقم القطعة"/>
             </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:1rem;font-size:1.05rem" data-en="Place Order 🛒" data-ar="تأكيد الطلب 🛒">Place Order 🛒</button>
-          </form>
-        </div>
-        <div class="order-summary">
-          <h3 data-en="Order Summary" data-ar="ملخص الطلب">Order Summary</h3>
-          <div id="summary-items"></div>
-          <div class="summary-total"><span data-en="Total" data-ar="الإجمالي">Total</span><span id="summary-total" style="color:var(--primary)">0.000 KD</span></div>
-        </div>
+          </div>
+          <label class="f-label" data-en="Street & Building" data-ar="الشارع والمبنى">الشارع والمبنى</label>
+          <input class="f-input" type="text" id="c-address" data-en-ph="Street, building, apartment" data-ar-ph="الشارع، المبنى، الشقة" placeholder="الشارع، المبنى، الشقة" required/>
+          <h3 style="margin-top:.5rem">💳 <span data-en="Payment Method" data-ar="طريقة الدفع">طريقة الدفع</span></h3>
+          <div class="pay-grid">
+            <div class="pay-opt active" onclick="selectPay(this)"><span style="font-size:1.3rem">🏦</span>KNET</div>
+            <div class="pay-opt" onclick="selectPay(this)"><span style="font-size:1.3rem">💳</span>Visa</div>
+            <div class="pay-opt" onclick="selectPay(this)"><span style="font-size:1.3rem">💳</span>Mastercard</div>
+            <div class="pay-opt" onclick="selectPay(this)"><span style="font-size:1.3rem"></span>Apple Pay</div>
+            <div class="pay-opt" onclick="selectPay(this)"><span style="font-size:1.3rem">📱</span>STC Pay</div>
+            <div class="pay-opt" onclick="selectPay(this)"><span style="font-size:1.3rem">💵</span><span data-en="Cash" data-ar="نقداً">نقداً</span></div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" style="font-size:1rem" data-en="Place Order 🛒" data-ar="تأكيد الطلب 🛒">تأكيد الطلب 🛒</button>
+        </form>
       </div>
-    </section>
+      <div class="cart-summary" id="order-summary">
+        <h3 data-en="Order Summary" data-ar="ملخص الطلب">ملخص الطلب</h3>
+        <div id="summary-items"></div>
+        <div class="sum-line"><span data-en="Subtotal" data-ar="المجموع الفرعي">المجموع الفرعي</span><span id="sub-total">0.000 KD</span></div>
+        <div class="sum-line"><span data-en="Delivery" data-ar="التوصيل">التوصيل</span><span style="color:var(--success)" data-en="FREE" data-ar="مجاني">مجاني</span></div>
+        <div class="sum-total"><span data-en="Total" data-ar="الإجمالي">الإجمالي</span><span id="summary-total">0.000 KD</span></div>
+      </div>
+    </div>
     <script>
-    const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-    let total = 0;
-    const si = document.getElementById('summary-items');
-    if(!cart.length){ si.innerHTML='<p style="color:var(--muted)">Cart is empty</p>'; }
-    else {
-      si.innerHTML = cart.map(i=>{total+=i.price*i.qty;return '<div class="summary-item"><span>'+i.name+' ×'+i.qty+'</span><span>'+(i.price*i.qty).toFixed(3)+' KD</span></div>';}).join('');
-      document.getElementById('summary-total').textContent = total.toFixed(3)+' KD';
-    }
-    function selectPay(el){document.querySelectorAll('.pay-method').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');}
-    async function submitOrder(e){
-      e.preventDefault();
-      const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-      if(!cart.length) return;
-      const pay = document.querySelector('.pay-method.selected');
-      const order = {
-        name: document.getElementById('c-name').value,
-        phone: document.getElementById('c-phone').value,
-        email: document.getElementById('c-email').value,
-        area: document.getElementById('c-area').value,
-        address: document.getElementById('c-address').value + (document.getElementById('c-block').value ? ', Block '+document.getElementById('c-block').value : ''),
-        payment: pay ? pay.textContent.trim() : 'KNET',
-        items: JSON.stringify(cart),
-        total: cart.reduce((s,i)=>s+i.price*i.qty,0)
+    (function(){
+      const lang=localStorage.getItem('lang')||'ar',isAr=lang==='ar';
+      const cart=JSON.parse(localStorage.getItem('cart')||'[]');
+      let total=0;
+      const si=document.getElementById('summary-items');
+      if(!cart.length){si.innerHTML='<p style="color:var(--muted);padding:.5rem 0">'+(isAr?'السلة فارغة':'Cart is empty')+'</p>';}
+      else{si.innerHTML=cart.map(i=>{total+=i.price*i.qty;const n=isAr&&i.nameAr?i.nameAr:i.name;return '<div class="sum-line"><span>'+n+' ×'+i.qty+'</span><span>'+(i.price*i.qty).toFixed(3)+' KD</span></div>';}).join('');document.getElementById('sub-total').textContent=total.toFixed(3)+' KD';document.getElementById('summary-total').textContent=total.toFixed(3)+' KD';}
+      function selectPay(el){document.querySelectorAll('.pay-opt').forEach(e=>e.classList.remove('active'));el.classList.add('active');}
+      window.selectPay=selectPay;
+      window.submitOrder=async function(e){
+        e.preventDefault();
+        const cart=JSON.parse(localStorage.getItem('cart')||'[]');
+        if(!cart.length)return;
+        const pay=document.querySelector('.pay-opt.active');
+        const order={name:document.getElementById('c-name').value,phone:document.getElementById('c-phone').value,email:document.getElementById('c-email').value,area:document.getElementById('c-area').value,address:document.getElementById('c-address').value+(document.getElementById('c-block').value?', قطعة '+document.getElementById('c-block').value:''),payment:pay?pay.textContent.trim():'KNET',items:JSON.stringify(cart),total:cart.reduce((s,i)=>s+i.price*i.qty,0)};
+        try{const r=await fetch('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(order)});const d=await r.json();const so=JSON.parse(localStorage.getItem('ks_orders')||'[]');so.push({id:d.orderId,total:order.total,status:'pending',date:new Date().toLocaleDateString()});localStorage.setItem('ks_orders',JSON.stringify(so));}catch(err){}
+        localStorage.removeItem('cart');
+        window.location.href='/order-success?name='+encodeURIComponent(order.name);
       };
-      try {
-        const r = await fetch('/api/orders', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(order)});
-        const d = await r.json();
-        const savedOrders = JSON.parse(localStorage.getItem('ks_orders')||'[]');
-        savedOrders.push({id: d.orderId, total: order.total, status:'pending', date: new Date().toLocaleDateString()});
-        localStorage.setItem('ks_orders', JSON.stringify(savedOrders));
-      } catch(err){}
-      localStorage.removeItem('cart');
-      window.location.href = '/order-success?name='+encodeURIComponent(order.name);
-    }
+    })();
     </script>
   `))
 })

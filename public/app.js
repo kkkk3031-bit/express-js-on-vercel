@@ -91,8 +91,23 @@ function addToCart(name, price, qty, nameAr) {
 
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+  const total = cart.reduce((s, i) => s + i.qty, 0)
   const el = document.getElementById('cart-count')
-  if (el) el.textContent = cart.reduce((s, i) => s + i.qty, 0)
+  if (el) el.textContent = total
+  const mb = document.getElementById('mnav-count')
+  if (mb) { mb.textContent = total; mb.style.display = total > 0 ? 'flex' : 'none' }
+}
+
+// ── MOBILE MENU ──
+function openMenu() {
+  document.getElementById('slide-menu')?.classList.add('open')
+  document.getElementById('slide-overlay')?.classList.add('open')
+  document.body.style.overflow = 'hidden'
+}
+function closeMenu() {
+  document.getElementById('slide-menu')?.classList.remove('open')
+  document.getElementById('slide-overlay')?.classList.remove('open')
+  document.body.style.overflow = ''
 }
 
 // ── INIT ──
@@ -104,4 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
   applyLang(l)
   updateNavAuth()
   updateCartCount()
+  // sync mobile nav badge
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+  const total = cart.reduce((s, i) => s + i.qty, 0)
+  const mb = document.getElementById('mnav-count')
+  if (mb) { mb.textContent = total; mb.style.display = total > 0 ? 'flex' : 'none' }
+  // highlight active mobile nav item
+  const path = window.location.pathname
+  document.querySelectorAll('.mnav-item').forEach(el => {
+    const href = el.getAttribute('href')
+    if (href && (href === path || (href !== '/' && path.startsWith(href)))) el.classList.add('active')
+  })
 })

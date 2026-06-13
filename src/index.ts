@@ -876,7 +876,7 @@ app.post('/admin/products/add', requireAdmin, (req, res) => {
   const newId = Math.max(...PRODUCTS.map(p => p.id), 0) + 1
   PRODUCTS.push({
     id: newId, name: name.trim(), nameAr: nameAr.trim(),
-    price: parseFloat(price), emoji: emoji.trim() || '📦',
+    price: parseFloat(price), emoji: emoji.trim() || '📦', img: '',
     category, categoryAr: categoryArMap[category] || category,
     badge: badge || '', desc: desc.trim(), descAr: descAr.trim(), specs: {}
   })
@@ -884,7 +884,7 @@ app.post('/admin/products/add', requireAdmin, (req, res) => {
 })
 
 app.post('/admin/products/delete/:id', requireAdmin, (req, res) => {
-  const id = parseInt(req.params.id)
+  const id = parseInt(String(req.params.id))
   PRODUCTS = PRODUCTS.filter(p => p.id !== id)
   res.redirect('/admin/products')
 })
